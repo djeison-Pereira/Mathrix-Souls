@@ -1,7 +1,7 @@
 # Mathrix Souls
 
 > **Feche os olhos. Escute. Calcule.**
-> Um RPG de fantasia sombria em que a sua única magia são as matrizes, e o seu único guia é o som.
+> Um RPG de fantasia sombria em que a sua única magia são as matrizes, e o seu guia é um grilo tagarela.
 
 ---
 
