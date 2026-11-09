@@ -86,7 +86,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 - **Responder sem esperar a fala acabar** (no `.exe` e no terminal; no Jupyter, não):
   - A tecla funciona **na hora, sem Enter**, e as **setas** valem como W, A, S, D.
   - Uma tecla apertada **durante a fala** cala a voz na hora, tanto a da Maria quanto as gravações.
-  - Numa **pergunta** (menu, escolhas, opções de matriz), a tecla **já vale como resposta**, e o jogo não lê o resto das opções. Numa fala da história, a tecla só **pula aquela fala**.
+  - Numa **pergunta** (menu, escolhas, opções de matriz), a tecla **já vale como resposta**, e o jogo não lê o resto das opções. Numa fala da história, a tecla **pula aquela fala**, exceto os comandos: **R** recomeça a fala; **P** pausa e, ao voltar, repete a fala; **V** e **H** dizem as vidas e os comandos e repetem a fala; **Q** sai do jogo. (Corrigido: antes, o R no meio da fala pulava para a próxima em vez de repetir.)
   - Para desligar, use `PODE_INTERROMPER`.
   - Testado com tecla simulada:
     - **Menu:** com a tecla em 1,5 s, a fala de 7 s parou e a resposta valeu.
