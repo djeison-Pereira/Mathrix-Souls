@@ -59,6 +59,6 @@ No menu, escolha:
 
 ---
 
-Jogo RPG inclusivo e acessível a deficientes visuais, criado como Projeto Final da matéria de "Álgebra Linear para Ciência de Dados" durante o 2º período dos cursos de Inteligência Artificial e Ciência de Dados pelos alunos da Faculdade Donaduzzi.
+Jogo de RPG acessível a pessoas com deficiência visual, criado como Projeto Final da disciplina de “Álgebra Linear para Ciência de Dados”, no 2º período dos cursos de Inteligência Artificial e Ciência de Dados, pelos alunos da Faculdade Donaduzzi.
 
 Detalhes técnicos, mudanças no roteiro e guia de gravação: [arquivos/NOTAS_DA_EQUIPE.md](arquivos/NOTAS_DA_EQUIPE.md).
