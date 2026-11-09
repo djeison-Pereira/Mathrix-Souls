@@ -31,7 +31,10 @@ No menu, escolha:
 - **Jogo completo:** toda a aventura. **Do despertar do jovem mago até o Dragão sob o farol, com volta à taverna.**
 
 ### Como jogar
-1. Baixe o projeto (botão **Code → Download ZIP**) e extraia.
+1. Baixe o projeto (botão **Code → Download ZIP**) e extraia, ou clone:
+   ```bash
+   git clone https://github.com/djeison-Pereira/Mathrix-Souls
+   ```
 2. Dê dois cliques em **`MathrixSouls.exe`**. O jogo abre e já começa a falar.
 3. Responda com **W, A, S, D** ou com as **setas**, sem precisar de Enter. Não precisa esperar a fala acabar: a tecla interrompe a voz. Não precisa instalar nada.
 4. Velocidade da fala de 0,75x a 3x: no menu, pela tecla **W**; durante o jogo, com **+** e **−**.
