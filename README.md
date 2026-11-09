@@ -21,6 +21,7 @@ Atravesse a floresta guiado por um Grilo Falante que não para de falar. Pague o
 - **Jogável de olhos fechados:** narração completa em português, vozes gravadas pela equipe e comandos simples (**W A S D**).
 - **Sem ficar perdido:** aperte **R** para ouvir de novo, **P** para pausar, **V** para saber suas vidas e **H** para lembrar os comandos.
 - **No seu ritmo:** responda no meio da fala, sem esperar a voz terminar, e ajuste a velocidade da narração no menu.
+- **Salve e continue depois:** aperte **M** para voltar ao menu (salva sozinho) ou **Q** para sair, e continue depois da cena onde parou.
 - **Três vidas e checkpoints:** errar ensina, e o Alquimista sempre te traz de volta (suspirando "De novo.").
 - **Personagens com voz própria:** o Alquimista convencido, o Grilo tagarela, o Goblin cobrador de pedágio, o Cavaleiro Fantasma, o Golem, o Dragão e o Max, eternamente bêbado.
 
@@ -37,10 +38,11 @@ No menu, escolha:
    ```
 2. Dê dois cliques em **`MathrixSouls.exe`**. O jogo abre e já começa a falar.
 3. Responda com **W, A, S, D** ou com as **setas**, sem precisar de Enter. Não precisa esperar a fala acabar: a tecla interrompe a voz. Não precisa instalar nada.
-4. Velocidade da fala de 0,75x a 3x: no menu, pela tecla **W**; durante o jogo, com **+** e **−**.
+4. Velocidade da fala de 0,75x a 3x: aperte **+** e **−** a qualquer momento, no menu ou durante o jogo (o **H** lembra disso).
 5. Para começar de uma cena específica, use a tecla **C** no menu (seleção de cenas).
 6. Perdeu as teclas que valem agora? Aperte **O**. Para todos os comandos, **H**.
 7. No menu, **G** escolhe entre as vozes gravadas pela equipe e as vozes do computador.
+8. **Salvamento:** aperte **M** a qualquer momento para voltar ao menu principal; o jogo é salvo sozinho. No menu, a tecla **E** ("continuar de onde parou") aparece quando há um jogo salvo. Começar um jogo novo apaga o salvo. Se apertar **Q** para sair no meio do jogo, ele pergunta se você quer salvar (**W** salva, **S** sai sem salvar, **A** volta ao jogo).
 
 > Mesmo sem nenhuma gravação, o jogo é narrado pelas vozes do Windows (Maria e Daniel), com uma voz e um tom para cada personagem, e um bipe avisa quando é a sua vez.
 > O `MathrixSouls.exe` da pasta principal é o de desenvolvimento e precisa da pasta `arquivos` ao lado (o ZIP do GitHub já traz as duas coisas). Um `.exe` que funciona sozinho, com todas as gravações dentro, vai ser gerado na entrega final.
@@ -54,7 +56,7 @@ No menu, escolha:
 | **Tema** | Fantasia sombria |
 | **Acessibilidade** | Jogável sem visão, narração completa, repetir fala, pausa |
 | **Idioma** | Português do Brasil (áudio e texto) |
-| **Controles** | Teclado: W, A, S, D ou setas; R, P, V, O, H; + e − para a velocidade da fala |
+| **Controles** | Teclado: W, A, S, D ou setas; R, P, V, O, H, M; + e − para a velocidade da fala |
 | **Plataforma** | Windows |
 
 ---

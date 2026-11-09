@@ -110,7 +110,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 ## 1. Resumo do que existe hoje
 
 - **Arquivo do jogo:** [`mathrix_souls.ipynb`](mathrix_souls.ipynb), um notebook Python com **o jogo completo**. Antes ele se chamava `mathrix_souls_demo.ipynb`.
-- **No menu:** **A** = DEMO (cenas 1 a 9, termina no Farol) · **D** = jogo completo (cenas 1 a 12 + epílogo) · **C** = seleção de cenas · **S** = como jogar · **W** = velocidade da fala · **G** = vozes gravadas ou do computador · **Q** = sair.
+- **No menu:** **A** = DEMO (cenas 1 a 9, termina no Farol) · **D** = jogo completo (cenas 1 a 12 + epílogo) · **C** = seleção de cenas · **S** = como jogar · **G** = vozes gravadas ou do computador · **E** = continuar de onde parou (se houver salvo) · **Q** = sair.
 - **Seleção de cenas (C):** **S** = próxima, **W** = anterior, **D** = jogar a partir dela, **A** = voltar ao menu.
   - A cena escolhida segue até o fim do jogo completo, e a cena 11 aparece como 11A (Cavaleiro) e 11B (Golem).
   - Se o jogador perder todas as vidas antes de passar por um checkpoint, volta para a cena escolhida.
@@ -142,7 +142,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
     - **Os dois zero:** diagonal. Se a diagonal for 1 e 1, identidade; se tudo for zero, nula.
     - **Só o de baixo zero:** triangular superior.
     - **Os dois iguais:** simétrica.
-- **Tamanho:** 290 falas (com os pedaços para montar frases) e 47 efeitos sonoros.
+- **Tamanho:** 297 falas (com os pedaços para montar frases) e 47 efeitos sonoros.
 - **Base da história:** o `roteirorascunho.pdf` (Alquimista, dragão, Max), com a **mãe doente** do `Jogo Inclusivo.md` como motivação do herói. A mãe está na casa de cura (o hospital de Trim), e o tesouro do dragão paga as ervas.
 
 ### Revisão matemática
@@ -216,7 +216,7 @@ Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin co
 5. **Pedaços** (`NUM_0` a `NUM_9`, `MENOS`, `MAT_E`, `MAT_EM_CIMA`, `MAT_EMBAIXO`, `MAT_LINHA_1..3`, `OPCAO_A/W/D`, `J02` a `J05`): grave curto, em tom neutro e **sem silêncio no começo nem no fim**. Eles são tocados em sequência para formar frases como *"Opção A: em cima, dois e um; embaixo, zero e três."*
 6. Rode o Apêndice de novo para conferir o que já está OK.
 
-Hoje são **290 falas** (incluindo os pedaços curtos, como os números) e **47 efeitos sonoros**.
+Hoje são **297 falas** (incluindo os pedaços curtos, como os números) e **47 efeitos sonoros**.
 
 | Personagem | Prefixo dos códigos |
 |---|---|
@@ -229,6 +229,19 @@ Hoje são **290 falas** (incluindo os pedaços curtos, como os números) e **47 
 | Voz misteriosa | `V01` |
 
 ---
+
+## Salvamento
+
+- **Tecla M (voltar ao menu):** vale a qualquer momento da partida, até no meio de uma fala. Salva o jogo sozinho (SV06) e volta ao menu principal. No fim da DEMO e no epílogo não há o que salvar.
+- **Menu principal:** quando existe jogo salvo, depois do N03 o menu fala o SV01 e aceita a tecla **E** para continuar de onde parou. Sem salvo, a tecla E não existe.
+- **Jogo novo apaga o salvo:** escolher a DEMO (A), o jogo completo (D) ou jogar uma cena pela seleção (C → D) descarta o salvamento anterior.
+- **Tecla Q no meio do jogo:** pergunta (SV03) se quer salvar: **W** salva e sai, **S** (ou **Q** de novo) sai sem salvar, **A** volta ao jogo (SV07; a cena atual recomeça do início). No menu, o Q sai direto.
+- **O que é guardado:** modo, cena atual, caminho da masmorra, magias, vidas, checkpoint e velocidade da fala. A cena atual **recomeça do início** (não dá para retomar no meio de um diálogo).
+- **Onde fica:** `%APPDATA%\MathrixSouls\salvamento.json`, fora da pasta do jogo, para valer também no `.exe` de entrega. Para apagar o progresso, é só deletar esse arquivo.
+- **Fim da história:** terminar o jogo completo apaga o salvamento.
+- **Testes automáticos:** não salvam nada, a menos que `ARQUIVO_DE_SAVE` aponte para um arquivo.
+- **Falas novas:** SV01 a SV07 (voz do Sistema). S12 e N05 passaram a citar a tecla M.
+- **Velocidade da fala:** o submenu do **W** no menu foi removido. A velocidade muda com **+** e **−** (no menu e no jogo), e o S12 (tecla H) explica isso. O N03 agora cita a tecla H. As falas N08_* e N09 (anúncios do submenu) não são mais usadas e não precisam ser gravadas.
 
 ## 4. O que mudou nas falas em relação ao roteiro
 
