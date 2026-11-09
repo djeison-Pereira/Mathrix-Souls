@@ -1,0 +1,6 @@
+# Python
+__pycache__/
+*.pyc
+
+# .exe de entrega: gerado só na entrega final (arquivos/gerar_exe.py --entrega)
+entrega/
