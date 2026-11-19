@@ -12,9 +12,9 @@ AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - taverna.mp3     ralexpdx - "My Tavern 1" (321220)
 - floresta.wav    klankbeeld - "Park forest, Loonse en Drunense Duinen" (810428)
 - caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
-- tempestade.wav, trovao.wav   cyntrix - "Heavy hail and thunder storm with tornado sirens" (698743)
+- tempestade.wav  cyntrix - "Heavy hail and thunder storm with tornado sirens" (698743)
 - porta.wav      PNMCarrieRailfan - "Doors: wood door with latch 1" (684538)
-- abertura.wav    OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807) + sino sintetizado
+- abertura.wav, trovao.wav   OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807); a abertura leva também um sino sintetizado
 - galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
 - masmorra.wav    Hybrid_V - "Creepy dungeon door slam" (320737)
 - frascos.wav     13GPanska_Gorbusinova_Anna - "Tinkling the glasses" (377989)
