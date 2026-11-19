@@ -8,7 +8,7 @@ O que faz, por tipo:
 - Música: nivela devagar (a faixa não fica mais alta no meio), comprime e deixa todas em -24 dB (RMS).
   O volume final de cada faixa fica em GANHO_MUSICA, no notebook. Vira .mp3 mono (128 kbps), codificado pelo próprio
   Windows (wav_para_mp3.ps1); decodificar e codificar de novo perde um pouco de qualidade a cada vez.
-- Ambiente: nivela e comprime, no volume de ALVO_AMBIENTE (ele já vai por baixo da narração).
+- Ambiente: nivela e comprime, em -20 dB no arquivo; o volume final de cada um fica em GANHO_AMBIENTE, no notebook.
 - Efeitos: comprime e iguala o volume, em ALVO_EFEITO (exceções em ALVO_EFEITO_ESPECIAL).
 Rodar de novo é seguro (o resultado converge), mas comprime um pouco mais a cada vez.
 """
@@ -24,7 +24,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 AUDIOS = os.path.join(AQUI, "audios")
 
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
-ALVO_AMBIENTE = {"taverna": -22.0, "floresta": -29.0, "caverna": -28.0, "tempestade": -28.0}
+ALVO_AMBIENTE = {"taverna": -20.0, "floresta": -20.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
 ALVO_EFEITO = -22.0
 ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "trovao": -27.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
 NAO_MEXER = {"abertura"}                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
