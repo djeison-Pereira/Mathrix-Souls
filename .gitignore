@@ -4,3 +4,6 @@ __pycache__/
 
 # .exe de entrega: gerado só na entrega final (arquivos/gerar_exe.py --entrega)
 entrega/
+
+# originais de áudio sem corte (só locais; os usados ficam em arquivos/audios)
+arquivos/audios_originais/

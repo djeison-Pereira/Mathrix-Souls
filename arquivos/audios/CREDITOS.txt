@@ -1,0 +1,24 @@
+Créditos de áudio do Mathrix Souls (confira a licença de cada faixa na página de origem)
+
+MÚSICAS (audios/musica)
+- menu.mp3      Luis Humanoide - "Cinematic Fantasy Calm Theme"
+- taverna.mp3   alanajordan - "The Ship Far Away" (medieval folk)
+- natureza.mp3  AudioCoffee - "Nature Cinematic Background"
+- aventura.mp3  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
+- dragao.mp3    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
+- epilogo.wav   habibieamrullah - "Coming Home Now" (Freesound 740655)
+
+AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
+- taverna.wav     ralexpdx - "My Tavern 1" (321220)
+- floresta.wav    klankbeeld - "Park forest, Loonse en Drunense Duinen" (810428)
+- caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
+- tempestade.wav, trovao.wav   cyntrix - "Heavy hail and thunder storm with tornado sirens" (698743)
+- porta.wav      PNMCarrieRailfan - "Doors: wood door with latch 1" (684538)
+- abertura.wav    OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807) + sino sintetizado
+- galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
+- masmorra.wav    Hybrid_V - "Creepy dungeon door slam" (320737)
+- frascos.wav     13GPanska_Gorbusinova_Anna - "Tinkling the glasses" (377989)
+- dragao_cai.wav  "(dragão som) free sound effect" (arquivo sem autor informado)
+
+Os demais efeitos foram sintetizados por gerar_sons.py (sem direitos de terceiros).
+Originais completos (sem cortes): arquivos/audios_originais/bronze (fora do jogo, não vão para o .exe).

@@ -109,6 +109,14 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 
 ---
 
+## Música, ambiente e efeitos reais
+
+- **Música por cena** (`audios/musica/`) e **ambiente em loop** (`audios/ambiente/`), definidos no dicionário `CENA_SOM` (célula Parte 4). Para trocar a trilha de uma cena, é só mudar o nome ali. Volumes em `VOLUME_MUSICA`, `VOLUME_AMBIENTE`, `VOLUME_EFEITOS` e `GANHO_MUSICA` (célula 1.1 e 1.2); `MUSICA_ATIVA = False` desliga a música.
+- **Efeitos junto com a narração:** `som("descrição", "nome", fundo=True)` toca sem esperar. Se existir `audios/ambiente/<nome>`, ele vira loop até a cena acabar (ex.: taverna, tempestade). Sem arquivo, o jogo continua descrevendo o efeito em voz alta.
+- Na cena do Goblin não há música, para o jogador ouvir de onde vem o golpe.
+- **Créditos:** `audios/CREDITOS.txt` (as licenças precisam ser conferidas e citadas no relatório). Os arquivos originais ficam em `audios_originais/`, fora da pasta `audios`, para não inflar o .exe.
+- `gerar_sons.py` não sobrescreve mais um efeito que já existe (use `--forcar`).
+
 ## 1. Resumo do que existe hoje
 
 - **Arquivo do jogo:** [`mathrix_souls.ipynb`](mathrix_souls.ipynb), um notebook Python com **o jogo completo**. Antes ele se chamava `mathrix_souls_demo.ipynb`.
