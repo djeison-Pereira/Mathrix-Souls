@@ -33,7 +33,14 @@ NAO_MEXER = {"abertura", "trovao"}                  # montado à mão (trovão +
 # ----------------------------------------------------------------------------- arquivos
 def ler(caminho):
     """-> (dados float (n, canais), taxa)."""
-    if caminho.lower().endswith(".mp3"):
+    usar_pygame = caminho.lower().endswith(".mp3")
+    if not usar_pygame:
+        try:
+            with wave.open(caminho):
+                pass
+        except wave.Error:                       # wav de 24 bits ou de ponto flutuante: o pygame sabe ler
+            usar_pygame = True
+    if usar_pygame:
         os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
         import pygame
         pygame.mixer.init(44100, -16, 2)
