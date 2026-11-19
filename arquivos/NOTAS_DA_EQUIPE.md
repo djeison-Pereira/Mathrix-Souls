@@ -115,7 +115,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 - **Efeitos junto com a narração:** `som("descrição", "nome", fundo=True)` toca sem esperar. Se existir `audios/ambiente/<nome>`, ele vira loop até a cena acabar (ex.: taverna, tempestade). Sem arquivo, o jogo continua descrevendo o efeito em voz alta.
 - Na cena do Goblin não há música, para o jogador ouvir de onde vem o golpe.
 - **Créditos:** `audios/CREDITOS.txt` (as licenças precisam ser conferidas e citadas no relatório). Os arquivos originais ficam em `audios_originais/`, fora da pasta `audios`, para não inflar o .exe.
-- **Masterização:** `python masterizar_audios.py` nivela, comprime e limita todos os áudios (música em -24 dB no arquivo, ambientes e efeitos em volumes-alvo; ver o topo do script). O volume final de cada música fica em `GANHO_MUSICA`. O `abertura` (trovão + sino) é montado à mão e o script não mexe nele. Para deixar uma música mais alta ou mais baixa, mude o `GANHO_MUSICA`, não o arquivo.
+- **Masterização:** `python masterizar_audios.py` nivela, comprime e limita todos os áudios (música em -24 dB no arquivo e salva em .mp3 pelo codificador do Windows, `wav_para_mp3.ps1`; ambientes e efeitos em volumes-alvo; ver o topo do script). O volume final de cada música fica em `GANHO_MUSICA`. O `abertura` (trovão + sino) é montado à mão e o script não mexe nele. Para deixar uma música mais alta ou mais baixa, mude o `GANHO_MUSICA`, não o arquivo.
 - `gerar_sons.py` não sobrescreve mais um efeito que já existe (use `--forcar`).
 
 ## 1. Resumo do que existe hoje

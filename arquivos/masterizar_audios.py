@@ -6,13 +6,15 @@ Uso (dentro de arquivos):
 
 O que faz, por tipo:
 - Música: nivela devagar (a faixa não fica mais alta no meio), comprime e deixa todas em -24 dB (RMS).
-  O volume final de cada faixa fica em GANHO_MUSICA, no notebook. Vira .wav mono de 22 kHz (o .mp3 é apagado).
+  O volume final de cada faixa fica em GANHO_MUSICA, no notebook. Vira .mp3 mono (128 kbps), codificado pelo próprio
+  Windows (wav_para_mp3.ps1); decodificar e codificar de novo perde um pouco de qualidade a cada vez.
 - Ambiente: nivela e comprime, no volume de ALVO_AMBIENTE (ele já vai por baixo da narração).
 - Efeitos: comprime e iguala o volume, em ALVO_EFEITO (exceções em ALVO_EFEITO_ESPECIAL).
 Rodar de novo é seguro (o resultado converge), mas comprime um pouco mais a cada vez.
 """
 import glob
 import os
+import subprocess
 import sys
 import wave
 
@@ -24,7 +26,7 @@ AUDIOS = os.path.join(AQUI, "audios")
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
 ALVO_AMBIENTE = {"taverna": -22.0, "floresta": -29.0, "caverna": -28.0, "tempestade": -28.0}
 ALVO_EFEITO = -22.0
-ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "trovao": -27.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -30.0}
+ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "trovao": -27.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
 NAO_MEXER = {"abertura"}                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
 
 
@@ -175,10 +177,18 @@ def main():
                 y, t = masterizar_ambiente(x, taxa, ALVO_AMBIENTE.get(nome, -28.0))
             else:
                 y, t = masterizar_efeito(x, taxa, ALVO_EFEITO_ESPECIAL.get(nome, ALVO_EFEITO))
-            destino = os.path.splitext(caminho)[0] + ".wav"
-            gravar(destino, y, t)
-            if destino != caminho:
-                os.remove(caminho)               # .mp3 virou .wav
+            base = os.path.splitext(caminho)[0]
+            if sub == "musica":                  # música: comprime em .mp3 (128 kbps) com o codificador do Windows
+                gravar(base + ".tmp.wav", y, t)
+                subprocess.run(["powershell", "-NoProfile", "-File", os.path.join(AQUI, "wav_para_mp3.ps1"),
+                                base + ".tmp.wav", base + ".mp3"], check=True, capture_output=True)
+                os.remove(base + ".tmp.wav")
+                destino = base + ".mp3"
+                if caminho != destino:
+                    os.remove(caminho)           # o .wav antigo
+            else:
+                destino = base + ".wav"
+                gravar(destino, y, t)
             print(f"{sub}/{nome:20s} {antes:6.1f} -> {rms_ativo(y, t):6.1f} dB   pico {np.abs(y).max():.2f}")
 
 

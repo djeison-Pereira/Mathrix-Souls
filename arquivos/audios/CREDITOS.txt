@@ -1,15 +1,15 @@
 Créditos de áudio do Mathrix Souls (confira a licença de cada faixa na página de origem)
 
 MÚSICAS (audios/musica)
-- menu.wav      Luis Humanoide - "Cinematic Fantasy Calm Theme"
-- taverna.wav   alanajordan - "The Ship Far Away" (medieval folk)
-- natureza.wav  AudioCoffee - "Nature Cinematic Background"
-- aventura.wav  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
-- dragao.wav    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
+- menu.mp3      Luis Humanoide - "Cinematic Fantasy Calm Theme"
+- taverna.mp3   alanajordan - "The Ship Far Away" (medieval folk)
+- natureza.mp3  AudioCoffee - "Nature Cinematic Background"
+- aventura.mp3  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
+- dragao.mp3    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
 - epilogo.wav   habibieamrullah - "Coming Home Now" (Freesound 740655)
 
 AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
-- taverna.wav     ralexpdx - "My Tavern 1" (321220)
+- taverna.mp3     ralexpdx - "My Tavern 1" (321220)
 - floresta.wav    klankbeeld - "Park forest, Loonse en Drunense Duinen" (810428)
 - caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
 - tempestade.wav, trovao.wav   cyntrix - "Heavy hail and thunder storm with tornado sirens" (698743)

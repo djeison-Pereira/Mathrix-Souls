@@ -270,11 +270,15 @@ def galo_vento():
 
 @efeito(0.6)
 def vento_janela():
-    d = 7.0
+    """Sopro curto de vento (sem grave, para não parecer trovão), antes de o Narrador falar."""
+    d = 2.2
     b = Buf(d)
-    amp = np.minimum(1, T(d) / 1.5) * np.minimum(1, (d - T(d)) / 2.0)
-    b.put(vento(d, 150, 900, 0.5) * amp, 0, 1.0)
-    b.put(nz(d, 900, 2200) * lfo(d, 1.0, 0, 1) ** 4 * amp, 0, 0.25)   # o vento arranhando a janela
+    t = T(d)
+    amp = np.sin(np.pi * t / d) ** 2                       # sobe e desce suave
+    b.put(sweep(d, 700, 2200, 8, 1.7) * amp, 0, 1.0)       # o ar passando
+    apito = osc(950 + 220 * np.sin(2 * np.pi * 0.9 * t), d)
+    b.put(fft_filter(apito, 500, 2500) * amp ** 2, 0, 0.10)   # assobio fraco na janela
+    b.L = fft_filter(b.L, 350, None)                       # corta o grave
     return b.saida(0.6)
 
 
