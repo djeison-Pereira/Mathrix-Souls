@@ -301,7 +301,8 @@ Em cada golpe: *[som: golpe vindo de um lado]* + `N06_03` [N61_esquerda] / `N06_
 
 *[som: madeira raspando na areia; remos rangendo]*
 
-- `N08_04` [N82] ＝ **Narrador:** Você embarca sozinho. O mar está calmo, só o rangido dos remos. Até que o vento muda, o céu escurece e o primeiro trovão estoura.
+- `N08_04_1` [N82] ＝ **Narrador:** Você embarca sozinho. O mar está calmo, só o rangido dos remos.
+- `N08_04_2` [N82] ＝ **Narrador:** Até que o vento muda, o céu escurece e o primeiro trovão estoura.
 
 *[som: vento forte e ondas batendo no casco]*
 
