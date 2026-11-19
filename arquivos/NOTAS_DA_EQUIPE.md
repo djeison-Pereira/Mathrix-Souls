@@ -54,26 +54,28 @@ Mathrix-Souls/
 ### Vozes do computador: Maria e Daniel
 Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em português do Brasil: a **Maria** (feminina) e o **Daniel** (masculino). Assim ele já é jogável sem nenhuma gravação. A voz, a velocidade e a voz masculina ficam na célula 1.1 (`VOZ_PREFERIDA`, `VOZ_VELOCIDADE`, `VOZ_MASCULINA`).
 
-**Vozes gravadas ou do computador (menu, tecla G):**
-- **Gravadas** (o padrão): toca a gravação de cada fala; **se faltar alguma, a voz do computador completa só aquela fala**. Dá para ir gravando aos poucos.
-- **Só do computador:** ignora as gravações e usa só Maria e Daniel.
-- Os **efeitos sonoros** tocam nos dois modos.
+**Versão 1: só vozes do computador.** Não há gravações, e o menu não tem mais a tecla G (escolher entre vozes gravadas e do computador). O código ainda toca `audios/<CÓDIGO>.wav` se um dia o arquivo existir, e os efeitos sonoros de `audios/sons` também.
 
 **Ajudas para quem joga só ouvindo:**
 - **Uma voz para cada personagem.** O Daniel não aparece na lista comum de vozes do Windows: ele é uma das vozes do Narrador do Windows ("OneCore"), e o jogo o encontra por lá. Cada personagem usa a Maria ou o Daniel, com **tom e ritmo próprios** (tabela `VOZES_PERSONAGENS`, célula 1.3). Tom medido gravando em `.wav`:
 
-  | Personagem | Voz | Tom medido |
-  |---|---|---|
-  | Narrador | Maria | 188 Hz |
-  | Grilo Falante | Maria | 242 Hz (bem agudo e rápido) |
-  | Sistema | Maria | um pouco agudo |
-  | Voz misteriosa | Maria | o mais grave e lento |
-  | Goblin | Daniel | 179 Hz (agudo e apressado) |
-  | Alquimista | Daniel | 140 Hz |
-  | Max | Daniel | 121 Hz (arrastado) |
-  | Cavaleiro Fantasma | Daniel | 114 Hz |
-  | Dragão | Daniel | 106 Hz |
-  | Golem | Daniel | 105 Hz (o mais lento) |
+  Regra usada no ajuste: **personagens da mesma cena precisam soar bem diferentes**, no tom, no ritmo ou na voz. Medido em nov/2026, com a mesma frase gravada em `.wav` (a duração mostra o ritmo):
+
+  | Personagem | Voz | Tom medido | Duração da frase | Aparece com |
+  |---|---|---|---|---|
+  | Narrador | Maria | 184 Hz | 7,1 s | todos |
+  | Sistema | Maria | 200 Hz | 6,4 s | todos |
+  | Grilo Falante | Maria | 240 Hz (bem agudo) | 5,7 s | quase todos |
+  | Ecos (a voz misteriosa) | Maria | 136 Hz (sussurro grave) | 11,1 s | Grilo |
+  | Mãe (o bilhete da cena 1) | Maria | 162 Hz (mais grave que o Narrador) | 11,1 s (bem devagar) | Narrador |
+  | Goblin | Daniel | 165 Hz (o mais agudo) | 4,8 s (o mais rápido) | Grilo; no epílogo, Marinheiro e Taverneiro |
+  | Taverneiro | Daniel | 150 Hz (animado) | 6,0 s | Alquimista e Max |
+  | Alquimista | Daniel | 126 Hz | 7,5 s | Taverneiro, Max, Marinheiro, Dragão |
+  | Max | Daniel | 118 Hz | 11,7 s (o mais arrastado) | Taverneiro e Alquimista |
+  | Marinheiro | Daniel | 103 Hz (velho e grave) | 9,4 s | Alquimista e Grilo |
+  | Cavaleiro Fantasma | Daniel | 102 Hz | 8,3 s | Grilo |
+  | Dragão | Daniel | 98 Hz | 7,5 s | Alquimista e Grilo |
+  | Golem | Daniel | 97 Hz | 10,4 s (bem lento) | Grilo |
 
   **Se o computador não tiver o Daniel**, os personagens dele usam a Maria com um tom de reserva (de 140 a 224 Hz), como era antes. A reserva pelo PowerShell só tem a Maria.
 
@@ -110,7 +112,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 ## 1. Resumo do que existe hoje
 
 - **Arquivo do jogo:** [`mathrix_souls.ipynb`](mathrix_souls.ipynb), um notebook Python com **o jogo completo**. Antes ele se chamava `mathrix_souls_demo.ipynb`.
-- **No menu:** **A** = DEMO (cenas 1 a 9, termina no Farol) · **D** = jogo completo (cenas 1 a 12 + epílogo) · **C** = seleção de cenas · **S** = como jogar · **G** = vozes gravadas ou do computador · **E** = continuar de onde parou (se houver salvo) · **Q** = sair.
+- **No menu:** **E** = continuar de onde parou (se houver salvo, é a primeira coisa que o menu diz) · **A** = DEMO (cenas 1 a 9, termina no Farol) · **D** = jogo completo (cenas 1 a 12 + epílogo) · **C** = seleção de cenas · **S** = como jogar · **Q** = sair.
 - **Seleção de cenas (C):** **S** = próxima, **W** = anterior, **D** = jogar a partir dela, **A** = voltar ao menu.
   - A cena escolhida segue até o fim do jogo completo, e a cena 11 aparece como 11A (Cavaleiro) e 11B (Golem).
   - Se o jogador perder todas as vidas antes de passar por um checkpoint, volta para a cena escolhida.
@@ -130,9 +132,10 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
   | Cavaleiro Fantasma | **Nula** como elemento neutro da soma; **transposta** e **simétrica** (o espelho) | A + 0 = A; escolhe a transposta; escolhe a simétrica |
   | Golem | **Nula** como matriz menos ela mesma | A − A = 0 |
   | Puzzle das pedras | **Nula**, **identidade** e **diagonal** | Pisa na pedra do tipo que o Golem pede |
-  | Dragão | **Classificação** (o combate do MVP) e o golpe final da **nula** | Diz o tipo mais específico de 2 fogos; no último, M − M |
+  | Farol (os dois modos) | **Charada da porta**: triangular superior | Escolhe entre 2x3, triangular superior e "zero em cima da diagonal" |
+  | Dragão | **Classificação** (o combate do MVP) e o golpe final do **determinante** | Diz o tipo mais específico de 2 fogos (a nula pode aparecer); no último, calcula o determinante 2x2 |
 
-  São **7 tipos** (quadrada, triangular superior, diagonal, identidade, nula, transposta e simétrica) e **2 operações** (soma e subtração). Pelo caminho do Golem, o jogador não vê transposta nem simétrica; o Dragão só cobra os tipos que ele aprendeu.
+  São **7 tipos** (quadrada, triangular superior, diagonal, identidade, nula, transposta e simétrica), **2 operações** (soma e subtração) e o **determinante**. Pelo caminho do Golem, o jogador não vê transposta nem simétrica; o Dragão só cobra os tipos que ele aprendeu.
 - **Tudo em 2x2:** quatro números por opção, para a pergunta ser curta de ouvir e a resposta, simples.
 - **Toda magia nova vem com um diálogo que ensina a resolver:**
   - **Alquimista no farol:** diagonal, identidade e a regra do mais específico.
@@ -142,7 +145,8 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
     - **Os dois zero:** diagonal. Se a diagonal for 1 e 1, identidade; se tudo for zero, nula.
     - **Só o de baixo zero:** triangular superior.
     - **Os dois iguais:** simétrica.
-- **Tamanho:** 297 falas (com os pedaços para montar frases) e 47 efeitos sonoros.
+  - **Alquimista, antes do Dragão, também:** o **determinante**, "o coração da matriz". Multiplique a diagonal principal, multiplique a outra diagonal e tire o segundo do primeiro. Exemplo: três e um em cima, dois e quatro embaixo: 12 − 2 = 10.
+- **Tamanho:** 403 falas (com os pedaços para montar frases) e 49 efeitos sonoros.
 - **Base da história:** o `roteirorascunho.pdf` (Alquimista, dragão, Max), com a **mãe doente** do `Jogo Inclusivo.md` como motivação do herói. A mãe está na casa de cura (o hospital de Trim), e o tesouro do dragão paga as ervas.
 
 ### Revisão matemática
@@ -153,13 +157,13 @@ Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin co
 - **Golem:** [4 7; 2 9] − [4 7; 2 9] = nula. As erradas são a própria matriz e o dobro, [8 14; 4 18], que é somar em vez de subtrair.
 - **Espelho:** transposta de uma matriz sorteada. As erradas são a própria matriz e a matriz "de cabeça para baixo". A matriz sorteada nunca é simétrica e tem a diagonal com números diferentes, senão duas opções ficariam iguais.
 - **Pedras:** em cada salto, exatamente uma pedra é do tipo pedido. As outras são de tipos parecidos que não servem: no salto da identidade, por exemplo, uma diagonal qualquer e a nula.
-- **Dragão:** as 2 primeiras rodadas pedem o **tipo mais específico** do fogo, sempre com uma única opção certa. Se o jogador escolhe um tipo em que a matriz "até se encaixa" (diagonal para a identidade), a explicação diz que existe um tipo mais específico. A última rodada é M − M = nula; as erradas são M e 2M.
-- **Números lidos:** vão de zero a vinte (`NUM_0` a `NUM_20`), porque o dobro de uma matriz pode chegar a 18.
+- **Dragão:** as 2 primeiras rodadas pedem o **tipo mais específico** do fogo, sempre com uma única opção certa. Se o jogador escolhe um tipo em que a matriz "até se encaixa" (diagonal para a identidade), a explicação diz que existe um tipo mais específico. A última rodada é o **determinante** de uma matriz 2x2 com números de 1 a 5, sem as duas diagonais com o mesmo produto. As opções são a certa (`ad − bc`), a soma das diagonais (`ad + bc`) e a conta ao contrário (`bc − ad`), sempre três números diferentes.
+- **Números lidos:** de menos cinquenta a cinquenta. Até vinte, um pedaço só (`NUM_0` a `NUM_20`); acima, dezena + "e" + unidade (`NUM_30` + `MAT_E` + `NUM_2` = "trinta e dois"). O determinante vai de −24 a 24, e a soma das diagonais chega a 50.
 
 **Verificação automática (milhares de sorteios cada):**
 - **Geradores:** 18 mil matrizes 2x2 dos seis tipos. Em todas, o tipo calculado e a **receita falada pelo Alquimista** dão a mesma resposta.
 - **Perguntas:** pedras, espelho e Dragão (pelos dois caminhos) sempre têm exatamente uma resposta certa.
-- **Golpe final:** M − M sempre dá a nula.
+- **Golpe final:** 5 mil sorteios do fogo final. A opção certa é sempre igual ao determinante do NumPy, e as três opções são sempre diferentes e ficam entre −50 e 50.
 
 **Pontos de atenção:**
 - **"Multiplicação posição a posição"** (resposta errada do goblin) **não** é a multiplicação de matrizes da disciplina. O produto A·B daria [7 10; 15 6]. No relatório, não chamar de "multiplicação de matrizes".
@@ -216,34 +220,44 @@ Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin co
 5. **Pedaços** (`NUM_0` a `NUM_9`, `MENOS`, `MAT_E`, `MAT_EM_CIMA`, `MAT_EMBAIXO`, `MAT_LINHA_1..3`, `OPCAO_A/W/D`, `J02` a `J05`): grave curto, em tom neutro e **sem silêncio no começo nem no fim**. Eles são tocados em sequência para formar frases como *"Opção A: em cima, dois e um; embaixo, zero e três."*
 6. Rode o Apêndice de novo para conferir o que já está OK.
 
-Hoje são **297 falas** (incluindo os pedaços curtos, como os números) e **47 efeitos sonoros**.
+Hoje são **403 falas** (incluindo os pedaços curtos, como os números) e **49 efeitos sonoros**. Na versão 1 nada disso é gravado: tudo sai na voz do computador.
 
-| Personagem | Prefixo dos códigos |
-|---|---|
-| Narrador | `N..`, `NUM_..`, `MAT_..`, `OPCAO_..`, `J..`, `MENOS` |
-| Sistema | `S..` |
-| Alquimista | `A..` |
-| Grilo Falante | `G..` |
-| Goblin | `GB..` |
-| Max | `M01` |
-| Voz misteriosa | `V01` |
+Os códigos da história seguem `PREFIXO` + `número da cena` + `_` + `ordem` (ex.: `T02_03` = Taverneiro, cena 2, 3ª fala).
+
+| Personagem | Dublador previsto | Prefixo dos códigos |
+|---|---|---|
+| Narrador | Felipe | `N..`, `NUM_..`, `MAT_..`, `OPCAO_..`, `TIPO_..`, `J..`, `MENOS` |
+| Grilo Falante | Felipe | `G..` |
+| Goblin | Vinícius | `GB..` |
+| Max | Vinícius | `MX..` |
+| Ecos | Vinícius | `V..` |
+| Mãe | a definir | `ME..` |
+| Taverneiro | Matheus | `T..` |
+| Cavaleiro Fantasma | Matheus | `CF..` |
+| Marinheiro | João | `MR..` |
+| Dragão | João | `DR..` |
+| Alquimista | Daniel | `A..` |
+| Golem | Daniel | `GO..` |
+| Sistema | voz do computador | `S..`, `SV..`, `SC_..` |
 
 ---
 
 ## Salvamento
 
 - **Tecla M (voltar ao menu):** vale a qualquer momento da partida, até no meio de uma fala. Salva o jogo sozinho (SV06) e volta ao menu principal. No fim da DEMO e no epílogo não há o que salvar.
-- **Menu principal:** quando existe jogo salvo, depois do N03 o menu fala o SV01 e aceita a tecla **E** para continuar de onde parou. Sem salvo, a tecla E não existe.
+- **Menu principal:** quando existe jogo salvo, o menu fala o SV01 **antes** do N03 e aceita a tecla **E** para continuar de onde parou. O **R** repete os dois. Sem salvo, a tecla E não existe.
 - **Jogo novo apaga o salvo:** escolher a DEMO (A), o jogo completo (D) ou jogar uma cena pela seleção (C → D) descarta o salvamento anterior.
 - **Tecla Q no meio do jogo:** pergunta (SV03) se quer salvar: **W** salva e sai, **S** (ou **Q** de novo) sai sem salvar, **A** volta ao jogo (SV07; a cena atual recomeça do início). No menu, o Q sai direto.
 - **O que é guardado:** modo, cena atual, caminho da masmorra, magias, vidas, checkpoint e velocidade da fala. A cena atual **recomeça do início** (não dá para retomar no meio de um diálogo).
 - **Onde fica:** `%APPDATA%\MathrixSouls\salvamento.json`, fora da pasta do jogo, para valer também no `.exe` de entrega. Para apagar o progresso, é só deletar esse arquivo.
 - **Fim da história:** terminar o jogo completo apaga o salvamento.
 - **Testes automáticos:** não salvam nada, a menos que `ARQUIVO_DE_SAVE` aponte para um arquivo.
-- **Falas novas:** SV01 a SV07 (voz do Sistema). S12 e N05 passaram a citar a tecla M.
+- **Falas novas:** SV01 a SV07 (voz do Sistema). O S12 cita a tecla M.
 - **Velocidade da fala:** o submenu do **W** no menu foi removido. A velocidade muda com **+** e **−** (no menu e no jogo), e o S12 (tecla H) explica isso. O N03 agora cita a tecla H. As falas N08_* e N09 (anúncios do submenu) não são mais usadas e não precisam ser gravadas.
 
 ## 4. O que mudou nas falas em relação ao roteiro
+
+> **Roteiro expandido (nov/2026):** a história ganhou o Taverneiro (Bartolo), o Marinheiro (Bento), os Ecos dos magos que não voltaram, a charada da porta do farol e o determinante como golpe final. Todos os códigos foram renumerados. A tabela de/para (código novo e código antigo) e o texto de cada fala estão em [`Material/ROTEIRO_EXPANDIDO.md`](Material/ROTEIRO_EXPANDIDO.md). As seções abaixo usam os **códigos antigos** e contam o histórico de cada mudança.
 
 Legenda: **Nova** = não existia no roteiro · **Adaptada** = texto do roteiro com ajuste · **Igual** = texto do roteiro.
 O motivo mais comum das mudanças: o jogador **não vê a tela**, então cada momento de decisão precisa dizer **quais teclas apertar**.
@@ -337,7 +351,7 @@ O motivo mais comum das mudanças: o jogador **não vê a tela**, então cada mo
 ### Epílogo
 - A30, N131, M02: **iguais**. N130: **adaptada**. O roteiro falava da neblina clareando; agora são o cheiro do dragão indo embora e as criaturas se acalmando.
 - A39: **nova**. O Alquimista confessa que já tinha mandado outros magos ("Mas você foi o primeiro que entendeu o zero"). Fecha o "eles sempre acham que são os primeiros" do Dragão e o "ele não é tão forte assim" do começo.
-- N133, N135, N136: **novas**, na voz do **Narrador**. O herói leva o ouro à casa de cura; o **Druida** (antes só citado) compra as ervas, que vão curar a mãe; a **Mãe** acorda e sorri; e o Druida libera o Alquimista para sair do vilarejo. O Druida e a Mãe **não têm falas gravadas**: aparecem só na narração, porque não há quem grave essas vozes.
+- N133, N135, N136: **novas**, na voz do **Narrador**. O herói leva o ouro à casa de cura; o **Druida** (antes só citado) compra as ervas, que vão curar a mãe; a **Mãe** acorda e sorri; e o Druida libera o Alquimista para sair do vilarejo. O Druida e a Mãe **não falam** no epílogo: aparecem só na narração. A Mãe só tem voz própria no bilhete da cena 1 (`ME01_01`).
 - G17 (o Grilo responde ao Max), N132 ("Fim de Mathrix Souls."): **novas**.
 
 ### Neblina removida
@@ -349,14 +363,18 @@ A neblina do roteiro saiu da história, por decisão da equipe, porque complicav
 | A mãe doente, e as ervas custam ouro (cena 1) | O ouro do dragão paga as ervas, e a mãe melhora (epílogo) |
 | As criaturas de fora estão agitadas, e o cheiro do dragão piora tudo (cena 2) | Sem o dragão, o cheiro vai embora e as criaturas se acalmam (epílogo) |
 | O Druida proíbe o Alquimista de sair (cena 2) | O Druida libera o Alquimista (epílogo) |
-| "Ele não é tão forte assim" (cena 2) e "eles sempre acham que são os primeiros" (cena 12) | O Alquimista confessa que mandou outros magos antes (epílogo) |
+| "Ele não é tão forte assim" (cena 2) e "eles sempre acham que são os primeiros" (cena 12) | O Alquimista confessa que mandou outros magos antes e que teve pressa com eles (epílogo) |
+| Os magos que não voltaram: o Taverneiro, o Grilo, o Goblin e o Marinheiro dão pistas, e os Ecos sussurram | O herói acha o chapéu azul e o amuleto de cristal atrás do dragão; o farol fica aceso por eles |
+| "O dragão tem um ponto fraco" (cenas 2 e 9) e "o coração da matriz" (cenas 9 a 11) | O Alquimista ensina o determinante, e o herói lê o coração do último fogo (cena 12) |
+| O bote Andorinha à deriva (cenas 8 e 9) | O Marinheiro leva o herói de volta para casa nele (epílogo) |
 | O herói não sabe usar a magia (cena 1) | Ele domina as matrizes e virou "um mago de verdade" (epílogo) |
 
 ### Sistema
 - N03, N05, S12: **mudaram**. Saiu o "aperte Enter"; entraram as setas, a velocidade da fala e o "não precisa esperar a fala terminar".
 - N08_0.75 a N08_2.0, N08_max, N08_min, N09: **novas** (ajuste de velocidade da fala; só são ditas no menu).
 - N140, N141, SC_1 a SC_12, SC_11A, SC_11B, SC_EPI, SC_INI, SC_FIM: **novas** (seleção de cenas). N03 e N05 passaram a citar a tecla C.
-- N160, N161: **novas** (tecla G: vozes gravadas ou do computador). S12, N05 e G02 passaram a citar a tecla O.
+- N160, N161: **removidas** junto com a tecla G (a versão 1 só tem vozes do computador). S12 e G02 citam a tecla O.
+- N05 (como jogar, tecla S no menu) e S12 (comandos, tecla H): **resumidas** para não cansar, com o mais usado primeiro. O N05 fica no essencial (W A S D, as três respostas, não precisa esperar, R e H) e o S12 lista o resto em uma frase curta por tecla.
 - G02 (o Grilo explicando os comandos): **mudou**. Agora ele também ensina as teclas + e −.
 - N04: **mudou**. Antes dizia que o jogo completo estava em construção; agora anuncia o início dele.
 - S11_nula, J07 a J09 (justificativas da nula), NUM_10 a NUM_20: **novas**.
