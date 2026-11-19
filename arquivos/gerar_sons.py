@@ -268,6 +268,16 @@ def galo_vento():
     return b.reverb(1.2, 0.35).saida(0.7)
 
 
+@efeito(0.6)
+def vento_janela():
+    d = 7.0
+    b = Buf(d)
+    amp = np.minimum(1, T(d) / 1.5) * np.minimum(1, (d - T(d)) / 2.0)
+    b.put(vento(d, 150, 900, 0.5) * amp, 0, 1.0)
+    b.put(nz(d, 900, 2200) * lfo(d, 1.0, 0, 1) ** 4 * amp, 0, 0.25)   # o vento arranhando a janela
+    return b.saida(0.6)
+
+
 @efeito()
 def porta():
     b = Buf(1.6)

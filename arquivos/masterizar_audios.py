@@ -24,7 +24,7 @@ AUDIOS = os.path.join(AQUI, "audios")
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
 ALVO_AMBIENTE = {"taverna": -22.0, "floresta": -29.0, "caverna": -28.0, "tempestade": -28.0}
 ALVO_EFEITO = -22.0
-ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "trovao": -27.0, "vez_do_jogador": -17.0, "dano": -19.0}
+ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "trovao": -27.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -30.0}
 NAO_MEXER = {"abertura"}                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
 
 
