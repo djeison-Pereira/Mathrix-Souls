@@ -132,6 +132,16 @@ def pontas(x, taxa, entrada=0.01, saida=0.05):
     return x
 
 
+def aparar_cauda(x, taxa, relativo=0.02, sobra=0.06):
+    """Corta o silêncio (quase mudo) no fim do efeito: o jogo espera o arquivo acabar antes de seguir."""
+    a = np.abs(x).max(1)
+    idx = np.where(a > a.max() * relativo)[0]
+    if not len(idx):
+        return x
+    fim = min(len(x), idx[-1] + 1 + int(sobra * taxa))
+    return x[:fim]
+
+
 def masterizar_musica(x, taxa):
     x, taxa = para_mono_22k(x, taxa)
     x = nivelar_devagar(x, taxa, ALVO_MUSICA)
@@ -149,7 +159,7 @@ def masterizar_ambiente(x, taxa, alvo):
 def masterizar_efeito(x, taxa, alvo):
     x = comprimir(x, taxa, -20.0, 3.0, 0.003, 0.12)
     x = ajustar_rms(x, taxa, alvo)
-    return pontas(limitar(x, 0.8), taxa), taxa
+    return pontas(aparar_cauda(limitar(x, 0.8), taxa), taxa), taxa
 
 
 # ----------------------------------------------------------------------------- principal
