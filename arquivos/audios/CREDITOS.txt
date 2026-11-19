@@ -15,6 +15,7 @@ AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - tempestade.wav  KevinT1001 - "Storm at sea" (170829)
 - porta.wav      Sound FX (YouTube, @soundfx6482) - "DOOR CREAKING SOUND EFFECT - FREE"
 - abertura.wav, trovao.wav   OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807); a abertura leva também um sino sintetizado
+- iniciar_jogo.wav  CAT-FOX_ALEX - "Orchestral hit 4 a" (Freesound 864896): o golpe ao começar o jogo
 - galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
 - masmorra.wav    Hybrid_V - "Creepy dungeon door slam" (320737)
 - frascos.wav     13GPanska_Gorbusinova_Anna - "Tinkling the glasses" (377989)

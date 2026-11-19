@@ -26,14 +26,21 @@ AUDIOS = os.path.join(AQUI, "audios")
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
 ALVO_AMBIENTE = {"taverna": -20.0, "floresta": -20.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
 ALVO_EFEITO = -22.0
-ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
+ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "iniciar_jogo": -24.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
 NAO_MEXER = {"abertura", "trovao"}                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
 
 
 # ----------------------------------------------------------------------------- arquivos
 def ler(caminho):
     """-> (dados float (n, canais), taxa)."""
-    if caminho.lower().endswith(".mp3"):
+    usar_pygame = caminho.lower().endswith(".mp3")
+    if not usar_pygame:
+        try:
+            with wave.open(caminho):
+                pass
+        except wave.Error:                       # wav de 24 bits ou de ponto flutuante: o pygame sabe ler
+            usar_pygame = True
+    if usar_pygame:
         os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
         import pygame
         pygame.mixer.init(44100, -16, 2)
