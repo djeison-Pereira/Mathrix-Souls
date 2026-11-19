@@ -330,7 +330,6 @@ def main():
 # (nome do arquivo, quando toca, o que o jogador ouve, busca sugerida em inglês, observação)
 T = ""
 SONS = [
- ("iniciar_jogo", "Ao apertar A ou D no menu", "um golpe de orquestra: a aventura começa", "epic game start orchestral hit", "toca junto do aviso de início, sem espera"),
  ("abertura", "Menu", "um trovão distante e um sino grave", "distant thunder deep bell", ""),
  ("vez_do_jogador", "Sempre que o jogo espera uma tecla", "bipe curto de \"sua vez\"", "ui notification beep short", "bem curto (menos de 0,3 s)"),
  ("dano", "Ao perder uma vida", "um impacto seco", "punch hit impact thud", ""),
