@@ -13,7 +13,7 @@ AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - floresta.wav    klankbeeld - "Park forest, Loonse en Drunense Duinen" (810428)
 - caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
 - tempestade.wav  KevinT1001 - "Storm at sea" (170829)
-- porta.wav      PNMCarrieRailfan - "Doors: wood door with latch 1" (684538)
+- porta.wav      Sound FX (YouTube, @soundfx6482) - "DOOR CREAKING SOUND EFFECT - FREE"
 - abertura.wav, trovao.wav   OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807); a abertura leva também um sino sintetizado
 - galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
 - masmorra.wav    Hybrid_V - "Creepy dungeon door slam" (320737)
