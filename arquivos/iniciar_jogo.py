@@ -19,12 +19,18 @@ import random       # noqa: F401
 import subprocess   # noqa: F401
 import time         # noqa: F401
 import winsound     # noqa: F401
+import math          # noqa: F401
+import msvcrt        # noqa: F401
+import contextlib    # noqa: F401
+import importlib.util  # noqa: F401
 from collections import defaultdict  # noqa: F401
 
 import numpy        # noqa: F401
 import comtypes.client  # noqa: F401  (voz da Maria via SAPI)
 
 os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)   # o .exe vem sem os módulos de imagem/fonte do pygame (não usados)
 import pygame       # noqa: F401,E402  (toca as gravações em .wav, .mp3 e .ogg)
 
 NOTEBOOK = "mathrix_souls.ipynb"
@@ -63,6 +69,15 @@ def main():
         if codigo.strip() == "jogar()":
             break  # para antes do Apêndice; o jogo começa logo abaixo
         exec(compile(codigo, NOTEBOOK, "exec"), ambiente)
+    if os.environ.get("MATHRIX_DIAG"):    # teste rápido do .exe: confere voz, áudio e música e sai (sem jogar)
+        ambiente["musica"]("menu")
+        ambiente["ambiente"]("taverna")
+        print("DIAG voz:", ambiente.get("_modo_voz"), "| mixer:", pygame.mixer.get_init(),
+              "| musica:", ambiente.get("_musica_atual"), "| ambiente:", ambiente.get("_ambiente_atual"),
+              "| numpy:", int(numpy.arange(4).sum()), "| det:", round(float(numpy.linalg.det(numpy.array([[1, 2], [3, 4]]))), 1))
+        opcoes, certa = ambiente["gerar_relampago"](2)      # sorteia matrizes (random + numpy)
+        print("DIAG matrizes: ok,", len(opcoes), "opções")
+        return
     ambiente["jogar"]()
 
 

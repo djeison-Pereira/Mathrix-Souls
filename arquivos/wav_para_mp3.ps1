@@ -1,6 +1,6 @@
-# Converte um .wav em .mp3 (128 kbps) usando o codificador do próprio Windows (sem instalar nada).
-# Uso: powershell -NoProfile -File wav_para_mp3.ps1 origem.wav destino.mp3
-param([string]$Origem, [string]$Destino)
+# Converte um .wav em .mp3 (Medium = 128 kbps) usando o codificador do próprio Windows (sem instalar nada).
+# Uso: powershell -NoProfile -File wav_para_mp3.ps1 origem.wav destino.mp3 [Low|Medium|High]
+param([string]$Origem, [string]$Destino, [string]$Qualidade = 'Medium')
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Runtime.WindowsRuntime
 $null = [Windows.Storage.StorageFile, Windows.Storage, ContentType = WindowsRuntime]
@@ -16,7 +16,7 @@ if (Test-Path $Destino) { Remove-Item $Destino }
 New-Item $Destino -ItemType File | Out-Null
 $entrada = Esperar ([Windows.Storage.StorageFile]::GetFileFromPathAsync($Origem)) ([Windows.Storage.StorageFile])
 $saida = Esperar ([Windows.Storage.StorageFile]::GetFileFromPathAsync($Destino)) ([Windows.Storage.StorageFile])
-$perfil = [Windows.Media.MediaProperties.MediaEncodingProfile]::CreateMp3([Windows.Media.MediaProperties.AudioEncodingQuality]::Medium)
+$perfil = [Windows.Media.MediaProperties.MediaEncodingProfile]::CreateMp3([Windows.Media.MediaProperties.AudioEncodingQuality]::$Qualidade)
 $tc = New-Object Windows.Media.Transcoding.MediaTranscoder
 $prep = Esperar ($tc.PrepareFileTranscodeAsync($entrada, $saida, $perfil)) ([Windows.Media.Transcoding.PrepareTranscodeResult])
 if (-not $prep.CanTranscode) { throw "O Windows não conseguiu preparar a conversão: $($prep.FailureReason)" }

@@ -6,9 +6,9 @@ Uso (dentro de arquivos):
 
 O que faz, por tipo:
 - Música: nivela devagar (a faixa não fica mais alta no meio), comprime e deixa todas em -24 dB (RMS).
-  O volume final de cada faixa fica em GANHO_MUSICA, no notebook. Vira .mp3 mono (128 kbps), codificado pelo próprio
+  O volume final de cada faixa fica em GANHO_MUSICA, no notebook. Vira .mp3 mono (96 kbps), codificado pelo próprio
   Windows (wav_para_mp3.ps1); decodificar e codificar de novo perde um pouco de qualidade a cada vez.
-- Ambiente: nivela e comprime, em -20 dB no arquivo; o volume final de cada um fica em GANHO_AMBIENTE, no notebook.
+- Ambiente: nivela e comprime, em -20 dB no arquivo; vira .mp3 (96 kbps); o volume final de cada um fica em GANHO_AMBIENTE, no notebook.
 - Efeitos: comprime e iguala o volume, em ALVO_EFEITO (exceções em ALVO_EFEITO_ESPECIAL).
 Rodar de novo é seguro (o resultado converge), mas comprime um pouco mais a cada vez.
 """
@@ -166,7 +166,7 @@ def masterizar_efeito(x, taxa, alvo):
 def main():
     so_listar = "--lista" in sys.argv
     so_estes = [a for a in sys.argv[1:] if not a.startswith("--")]   # nomes: só esses arquivos
-    pastas = [("musica", "*.mp3"), ("musica", "*.wav"), ("ambiente", "*.wav"), ("sons", "*.wav")]
+    pastas = [("musica", "*.mp3"), ("musica", "*.wav"), ("ambiente", "*.mp3"), ("ambiente", "*.wav"), ("sons", "*.wav")]
     arquivos = [(sub, c) for sub, padrao in pastas for c in sorted(glob.glob(os.path.join(AUDIOS, sub, padrao)))]
     for sub, caminho in arquivos:
         if True:
@@ -188,10 +188,10 @@ def main():
             else:
                 y, t = masterizar_efeito(x, taxa, ALVO_EFEITO_ESPECIAL.get(nome, ALVO_EFEITO))
             base = os.path.splitext(caminho)[0]
-            if sub == "musica":                  # música: comprime em .mp3 (128 kbps) com o codificador do Windows
+            if sub in ("musica", "ambiente"):    # música e ambiente: viram .mp3 (Low = 96 kbps) com o codificador do Windows
                 gravar(base + ".tmp.wav", y, t)
                 subprocess.run(["powershell", "-NoProfile", "-File", os.path.join(AQUI, "wav_para_mp3.ps1"),
-                                base + ".tmp.wav", base + ".mp3"], check=True, capture_output=True)
+                                base + ".tmp.wav", base + ".mp3", "Low"], check=True, capture_output=True)
                 os.remove(base + ".tmp.wav")
                 destino = base + ".mp3"
                 if caminho != destino:

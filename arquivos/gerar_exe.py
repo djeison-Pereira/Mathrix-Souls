@@ -26,6 +26,13 @@ NOTEBOOK = os.path.join(AQUI, "mathrix_souls.ipynb")
 AUDIOS = os.path.join(AQUI, "audios")
 
 
+# Módulos que entram no .exe sem o jogo precisar deles (só deixam o arquivo maior).
+EXCLUIR = ["tkinter", "yaml", "psutil", "charset_normalizer", "pydoc_data", "unittest", "xmlrpc", "test",
+           "asyncio", "multiprocessing", "concurrent", "http", "urllib", "email", "ssl", "bz2", "lzma", "xml",
+           "hashlib", "_hashlib", "hmac", "secrets",
+           "pygame.font", "pygame.freetype", "pygame.sysfont", "pygame.image", "pygame.imageext"]   # o jogo só usa o áudio do pygame
+
+
 def gerar(entrega=False):
     destino = os.path.join(RAIZ, "entrega") if entrega else RAIZ
     with tempfile.TemporaryDirectory() as temp:
@@ -36,6 +43,7 @@ def gerar(entrega=False):
             "--name", "MathrixSouls",
             "--collect-submodules", "comtypes",
             "--exclude-module", "comtypes.test",
+            *[arg for modulo in EXCLUIR for arg in ("--exclude-module", modulo)],   # tira o que o jogo não usa (.exe menor)
             "--distpath", destino,
             "--workpath", os.path.join(temp, "build"),
             "--specpath", temp,
