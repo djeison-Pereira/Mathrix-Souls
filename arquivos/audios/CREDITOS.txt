@@ -1,11 +1,11 @@
 Créditos de áudio do Mathrix Souls (confira a licença de cada faixa na página de origem)
 
 MÚSICAS (audios/musica)
-- menu.mp3      Luis Humanoide - "Cinematic Fantasy Calm Theme"
-- taverna.mp3   alanajordan - "The Ship Far Away" (medieval folk)
+- menu.wav      Luis Humanoide - "Cinematic Fantasy Calm Theme"
+- taverna.wav   alanajordan - "The Ship Far Away" (medieval folk)
 - natureza.wav  AudioCoffee - "Nature Cinematic Background"
-- aventura.mp3  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
-- dragao.mp3    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
+- aventura.wav  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
+- dragao.wav    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
 - epilogo.wav   habibieamrullah - "Coming Home Now" (Freesound 740655)
 
 AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
