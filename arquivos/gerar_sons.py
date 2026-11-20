@@ -749,6 +749,18 @@ def abertura():
     return b.reverb(1.8, 0.4).saida()
 
 
+@efeito(0.6)
+def goblin_salta():
+    """O goblin salta para o meio da trilha: folhas farfalhando, um 'whoosh' no ar e a aterrissagem."""
+    d = 1.2
+    b = Buf(d)
+    b.put(nz(0.5, 2000, 7000) * bump(0.5, 0.28, 0.14) * lfo(0.5, 30, 0.2, 1) ** 2, 0.0, 0.5)   # folhas
+    b.put(sweep(0.4, 500, 2600), 0.12, 0.45)                                                    # o salto no ar
+    b.put(thud(120, 0.25, 0.05), 0.5, 0.9)                                                     # a aterrissagem
+    b.put(nz(0.3, 1500, 6500) * E(0.3, 0.07) * lfo(0.3, 50, 0.3, 1), 0.5, 0.6)                   # folhas espalhadas
+    return b.reverb(0.3, 0.1).saida(0.6)
+
+
 @efeito(0.45)
 def vez_do_jogador():
     b = Buf(0.3)

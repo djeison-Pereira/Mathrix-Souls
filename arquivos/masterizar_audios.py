@@ -24,10 +24,12 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 AUDIOS = os.path.join(AQUI, "audios")
 
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
-ALVO_AMBIENTE = {"taverna": -20.0, "floresta": -20.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
+ALVO_AMBIENTE = {"taverna": -20.0, "floresta": -23.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
 ALVO_EFEITO = -22.0
-ALVO_EFEITO_ESPECIAL = {"galo_vento": -29.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
-NAO_MEXER = {"abertura", "trovao"}                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
+ALVO_EFEITO_ESPECIAL = {"barco": -26.0, "grilo": -36.0, "galo_vento": -33.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
+AMBIENTE_FIRME = {"floresta"}                      # compressão mais forte: sem pássaros e estalos "saltando" por cima da fala
+MUSICA_ORIGINAL = {"menu", "shanty"}                       # fica como o autor fez (com a dinâmica toda); o volume é só o GANHO_MUSICA do notebook
+NAO_MEXER = {"abertura", "trovao", "remos"}   # montados à mão (ver NOTAS_DA_EQUIPE)                  # montado à mão (trovão + sino): ver NOTAS_DA_EQUIPE
 
 
 # ----------------------------------------------------------------------------- arquivos
@@ -36,8 +38,9 @@ def ler(caminho):
     usar_pygame = caminho.lower().endswith(".mp3")
     if not usar_pygame:
         try:
-            with wave.open(caminho):
-                pass
+            with wave.open(caminho) as w0:
+                if w0.getsampwidth() != 2:                 # 24 bits, 32 bits...: o pygame sabe ler
+                    raise wave.Error("não é 16 bits")
         except wave.Error:                       # wav de 24 bits ou de ponto flutuante: o pygame sabe ler
             usar_pygame = True
     if usar_pygame:
@@ -156,8 +159,12 @@ def masterizar_musica(x, taxa):
     return limitar(ajustar_rms(x, taxa, ALVO_MUSICA), 0.9), taxa
 
 
-def masterizar_ambiente(x, taxa, alvo):
+def masterizar_ambiente(x, taxa, alvo, firme=False):
     x, taxa = para_mono_22k(x, taxa)
+    if firme:        # nivela em janelas curtas e comprime forte: o volume fica quase parado e os picos, domados
+        x = nivelar_devagar(x, taxa, alvo, janela_s=3, limite_db=12)
+        x = comprimir(x, taxa, alvo + 2, 5.0, 0.005, 0.3)
+        return limitar(ajustar_rms(x, taxa, alvo), 0.5), taxa
     x = nivelar_devagar(x, taxa, alvo, janela_s=5, limite_db=8)
     x = comprimir(x, taxa, alvo + 8, 2.5, 0.02, 0.4)
     return limitar(ajustar_rms(x, taxa, alvo), 0.8), taxa
@@ -185,13 +192,16 @@ def main():
             if so_listar:
                 print(f"{sub}/{nome:20s} RMS {antes:6.1f} dB   pico {np.abs(x).max():.2f}")
                 continue
-            if sub == "sons" and nome in NAO_MEXER:
+            if sub == "musica" and nome in MUSICA_ORIGINAL:
+                print(f"{sub}/{nome:20s} (original, não mexe)")
+                continue
+            if nome in NAO_MEXER and sub in ("sons", "ambiente"):
                 print(f"{sub}/{nome:20s} (não mexe)")
                 continue
             if sub == "musica":
                 y, t = masterizar_musica(x, taxa)
             elif sub == "ambiente":
-                y, t = masterizar_ambiente(x, taxa, ALVO_AMBIENTE.get(nome, -28.0))
+                y, t = masterizar_ambiente(x, taxa, ALVO_AMBIENTE.get(nome, -28.0), firme=nome in AMBIENTE_FIRME)
             else:
                 y, t = masterizar_efeito(x, taxa, ALVO_EFEITO_ESPECIAL.get(nome, ALVO_EFEITO))
             base = os.path.splitext(caminho)[0]

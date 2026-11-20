@@ -1,24 +1,27 @@
 Créditos de áudio do Mathrix Souls (confira a licença de cada faixa na página de origem)
 
 MÚSICAS (audios/musica)
-- menu.mp3      Luis Humanoide - "Cinematic Fantasy Calm Theme"
+- menu.mp3      MFCC - "Irish Celtic Medieval Music" (Pixabay 629192): abertura do jogo e menu principal (arquivo original, sem masterização)
 - taverna.mp3   alanajordan - "The Ship Far Away" (medieval folk)
 - natureza.mp3  AudioCoffee - "Nature Cinematic Background"
 - aventura.mp3  Geoff Harvey - "In the Land of Make Believe" (Pixabay)
 - dragao.mp3    Sonican - "Wizard Rider" (enchanted fantasy orchestral)
-- epilogo.wav   habibieamrullah - "Coming Home Now" (Freesound 740655)
+- epilogo.mp3   habibieamrullah - "Coming Home Now" (Freesound 740655)
+- celta.mp3     vjgalaxy - "Mystical Celtic Forest Ambience 05" (Pixabay 560012): trilha ao sair da casa do Alquimista até a bifurcação
+- shanty.mp3    kaazoom - "Weigh the Anchor - A Sea Shanty" (Pixabay 363826): toca ao embarcar (cena 8), por uns 12 s; arquivo original cortado nos primeiros ~20 s, sem masterização
 
 AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - taverna.mp3     ralexpdx - "My Tavern 1" (321220)
-- floresta.wav    klankbeeld - "Park forest, Loonse en Drunense Duinen" (810428)
+- floresta.mp3    paulprit - "Day time sounds in Malaysian jungle" (Freesound 619264)
 - caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
 - tempestade.wav  KevinT1001 - "Storm at sea" (170829)
 - porta.wav      Sound FX (YouTube, @soundfx6482) - "DOOR CREAKING SOUND EFFECT - FREE"
-- abertura.wav, trovao.wav   OneSoundToRuleThemAll - "Thunder 6" (Freesound 238807); a abertura leva também um sino sintetizado
+- abertura.wav, trovao.wav   -CASK- - "Huge Thunder Crack [XY + MS]" (Freesound 732992); a abertura leva também um sino sintetizado
 - galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
 - masmorra.wav    Hybrid_V - "Creepy dungeon door slam" (320737)
-- frascos.wav     13GPanska_Gorbusinova_Anna - "Tinkling the glasses" (377989)
+- remos.mp3     Lubini - "Splashing water by oars" (Freesound 338345): recorte de 11 s em loop (ambiente da travessia de barco), comprimido
+- frascos.wav     sintetizado (vidros tilintando, a partir do efeito "armadura" do gerar_sons.py, sem a buzina)
 - dragao_cai.wav  "(dragão som) free sound effect" (arquivo sem autor informado)
 
-Os demais efeitos foram sintetizados por gerar_sons.py (sem direitos de terceiros).
+Sintetizados por gerar_sons.py (sem direitos de terceiros): o sino da abertura, o vento da janela e os efeitos abismo, cajado_sino, calmaria, dano, desmoronamento, esquiva, farol, fogo_apaga, garra_esquerda, garra_direita, garra_frente, goblin_foge, goblin_salta, golem_poeira, grilo, mar_calmo, passo, queimadura, teleporte, tesouro, vento_seco e vez_do_jogador.
 Originais completos (sem cortes): arquivos/audios_originais/bronze (fora do jogo, não vão para o .exe).
