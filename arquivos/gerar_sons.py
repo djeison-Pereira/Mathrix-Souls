@@ -324,13 +324,15 @@ def teleporte():
 
 
 @efeito()
-def cajado_sino():
-    d = 4.5
+def cajado():
+    """Uma batida seca de madeira no chão de pedra, que ecoa pela sala (sem sino)."""
+    d = 3.0
+    batida = thud(85, 0.25, 0.05) + 0.6 * nz(0.25, 500, 4000) * E(0.25, 0.01)
     b = Buf(d)
-    b.put(thud(85, 0.25, 0.05), 0, 1.0)          # primeiro o cajado bate no chão...
-    b.put(nz(0.05, 500, 4000) * E(0.05, 0.01), 0, 0.6)
-    b.put(ping(110, d - 1.05, 1.4, BELL), 1.05, 0.9)   # ...e 1 segundo depois o sino grave
-    return b.reverb(1.5, 0.35).saida()
+    b.put(batida, 0, 1.0)
+    for k in range(1, 6):                          # o eco: cada repetição mais fraca e mais abafada
+        b.put(fft_filter(batida, None, 3000 / k), 0.3 * k, 0.55 ** k)
+    return b.reverb(1.6, 0.4).saida()
 
 
 @efeito()
@@ -660,10 +662,13 @@ def golem_poeira():
 def fogo():
     d = 2.8
     b = Buf(d)
-    b.put(roar(1.9, 95, 70), 0.0, 1.0)
+    # só o agudo: o sopro da labareda, os estalos e o chiado (sem o tom grave do rugido, que soava a corneta)
+    t = T(1.9)
+    labareda = nz(1.9, 1500, 6000) * lfo(1.9, 14, 0.3, 1) * np.minimum(1, t / 0.15) * np.minimum(1, (1.9 - t) / 0.25)
+    b.put(labareda, 0.0, 0.5)
     b.put(crackle(d, 70, 1500), 0, 0.5)
     b.put(nz(d, 2000, 8000) * bump(d, 1.0, 0.8), 0, 0.2)
-    return b.reverb(0.9, 0.25).saida()
+    return b.reverb(0.9, 0.25).saida(0.38)          # só agudo soa mais alto: pico menor, ~ -24 dB
 
 
 @efeito()
@@ -671,8 +676,7 @@ def fogo_apaga():
     d = 1.8
     b = Buf(d)
     b.put(crackle(d, 70, 1500) * E(d, 0.6), 0, 0.8)
-    b.put(nz(d, 3000, 9000) * E(d, 0.5), 0, 0.4)
-    b.put(sweep(d, 1200, 400), 0, 0.2)
+    b.put(nz(d, 3000, 9000) * E(d, 0.5), 0, 0.4)      # (sem a varredura de 1200 a 400 Hz: soava a buzina)
     return b.saida(0.7)
 
 

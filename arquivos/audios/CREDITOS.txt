@@ -13,8 +13,8 @@ MÚSICAS (audios/musica)
 AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - taverna.mp3     ralexpdx - "My Tavern 1" (321220)
 - floresta.mp3    paulprit - "Day time sounds in Malaysian jungle" (Freesound 619264)
-- caverna.wav     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
-- tempestade.wav  KevinT1001 - "Storm at sea" (170829)
+- caverna.mp3     Darklitstudio - "Dark ambience atmosphere cave dungeon echo" (816416)
+- tempestade.mp3  KevinT1001 - "Storm at sea" (170829)
 - porta.wav      Sound FX (YouTube, @soundfx6482) - "DOOR CREAKING SOUND EFFECT - FREE"
 - abertura.wav, trovao.wav   -CASK- - "Huge Thunder Crack [XY + MS]" (Freesound 732992); a abertura leva também um sino sintetizado
 - galo_vento.wav  BenjaminNelan - "Rooster crow 1" (435508)
@@ -23,10 +23,20 @@ AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - frascos.wav     sintetizado (vidros tilintando, a partir do efeito "armadura" do gerar_sons.py, sem a buzina)
 - dragao_cai.wav  "(dragão som) free sound effect" (arquivo sem autor informado)
 
-- madeira_cai.wav   DiscordantScraps - "Wood Tumble" (Freesound 767432), abafado e misturado a um chapinhar real (Lubini, Freesound 338345) para soar como o bote na água
-- rangido_barco.wav   Kostas17 - "Creaking floor" (Freesound 536365), dois rangidos, só os agudos (filtrado)
+- agua_empurra.wav   Lubini - "Splashing water by oars" (Freesound 338345), chapinhar abafado: o bote entra na água (cena 8)
+- madeira_embarca.wav   DiscordantScraps - "Wood Tumble" (Freesound 767432), com som oco de casco, a água do Lubini (Freesound 338345) por baixo e um rangido grave do Kostas17 (Freesound 536365): você e o Grilo embarcam no bote (cena 8)
+- rangido_barco.wav   Kostas17 - "Creaking floor" (Freesound 536365), dois rangidos um pouco mais agudos (o remo no tolete), com a água do Lubini (Freesound 338345) depois de cada remada
 
 - praia.mp3   suukadi - "Sea and Seagull, wave" (Freesound 410323)
 
-Sintetizados por gerar_sons.py (sem direitos de terceiros): o sino da abertura, o vento da janela e os efeitos abismo, cajado_sino, calmaria, dano, desmoronamento, esquiva, farol, fogo_apaga, garra_esquerda, garra_direita, garra_frente, goblin_foge, goblin_salta, golem_poeira, grilo, mar_calmo, passo, queimadura, teleporte, tesouro, vento_seco e vez_do_jogador.
+Efeitos que misturam síntese com gravação real (gerados por ferramentas_audio/gerar_propostas.py):
+- calmaria.wav       vento sintetizado + o mar do suukadi - "Sea and Seagull, wave" (Freesound 410323)
+- farol.wav          engrenagem e vento sintetizados + o mar do suukadi (Freesound 410323), abafado
+- banquete.wav       louça e talheres sintetizados + o murmúrio de ralexpdx - "My Tavern 1" (Freesound 321220), abafado
+- bifurcacao.wav     pássaros de klankbeeld - "Park forest Loonse en Drunense Duinen" (Freesound 810428), água do Lubini (Freesound 338345) e vento sintetizado
+- teleporte.wav      Snapper4298 - "Snap_6" (Freesound 177507), o estalar de dedos, com um redemoinho de vento sintetizado
+- goblin_risada.wav  SnowFightStudios - "Goblin various laughs and giggles" (Freesound 643664), uma das risadas, girando em volta da cabeça
+
+Sintetizados por gerar_sons.py (sem direitos de terceiros): o sino da abertura, o vento da janela e os efeitos abismo, cajado, calmaria_vento, desmoronamento_2, esquiva, farol_porta, fogo, fogo_apaga, garra_esquerda, garra_direita, garra_frente, goblin_foge, goblin_salta, golem_poeira, mar_calmo, passo, pedra_firme, pedra_afunda, queimadura, tesouro, vento_seco e vez_do_jogador.
+Sintetizados por ferramentas_audio/gerar_propostas.py (sem direitos de terceiros): abismo_forte, dano, desmoronamento, espelho, esquiva_dragao, garra_dragao_esquerda, garra_dragao_direita, garra_dragao_frente, golem, grilo, magia e vento_muda.
 Originais completos (sem cortes): arquivos/audios_originais/bronze (fora do jogo, não vão para o .exe).

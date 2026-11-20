@@ -33,9 +33,34 @@ NAO_MEXER = {"abertura", "trovao", "remos"}   # montados à mão (ver NOTAS_DA_E
 
 
 # ----------------------------------------------------------------------------- arquivos
+def _ffmpeg():
+    """Caminho do ffmpeg (no PATH ou instalado pelo winget), ou None."""
+    import shutil
+    achado = shutil.which("ffmpeg")
+    if achado:
+        return achado
+    pacotes = os.path.join(os.environ.get("LOCALAPPDATA", ""), "Microsoft", "WinGet", "Packages")
+    achados = glob.glob(os.path.join(pacotes, "*FFmpeg*", "*", "bin", "ffmpeg.exe"))
+    return achados[0] if achados else None
+
+
+def _ler_ffmpeg(ff, caminho):
+    """Decodifica qualquer formato (ex.: .flac dos originais) na taxa e nos canais do próprio arquivo, sem reamostrar."""
+    probe = os.path.join(os.path.dirname(ff), "ffprobe" + (".exe" if ff.lower().endswith(".exe") else ""))
+    info = subprocess.run([probe, "-v", "error", "-select_streams", "a:0", "-show_entries",
+                           "stream=sample_rate,channels", "-of", "default=nw=1", caminho],
+                          capture_output=True, text=True, check=True).stdout
+    campos = dict(linha.split("=", 1) for linha in info.split())
+    pcm = subprocess.run([ff, "-v", "error", "-i", caminho, "-map", "0:a:0", "-f", "f32le", "-acodec", "pcm_f32le", "-"],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(pcm, "<f4").astype(float).reshape(-1, int(campos["channels"])), int(campos["sample_rate"])
+
+
 def ler(caminho):
-    """-> (dados float (n, canais), taxa)."""
-    usar_pygame = caminho.lower().endswith(".mp3")
+    """-> (dados float (n, canais), taxa). .flac (os originais): pelo ffmpeg, se houver; senão, pelo pygame (44,1 kHz)."""
+    if caminho.lower().endswith(".flac") and _ffmpeg():
+        return _ler_ffmpeg(_ffmpeg(), caminho)
+    usar_pygame = caminho.lower().endswith((".mp3", ".flac"))
     if not usar_pygame:
         try:
             with wave.open(caminho) as w0:
