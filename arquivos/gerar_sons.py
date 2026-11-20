@@ -325,11 +325,11 @@ def teleporte():
 
 @efeito()
 def cajado_sino():
-    d = 3.5
+    d = 4.5
     b = Buf(d)
-    b.put(thud(85, 0.25, 0.05), 0, 1.0)
+    b.put(thud(85, 0.25, 0.05), 0, 1.0)          # primeiro o cajado bate no chão...
     b.put(nz(0.05, 500, 4000) * E(0.05, 0.01), 0, 0.6)
-    b.put(ping(110, d - 0.05, 1.4, BELL), 0.05, 0.9)
+    b.put(ping(110, d - 1.05, 1.4, BELL), 1.05, 0.9)   # ...e 1 segundo depois o sino grave
     return b.reverb(1.5, 0.35).saida()
 
 

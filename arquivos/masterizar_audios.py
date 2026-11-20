@@ -24,7 +24,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 AUDIOS = os.path.join(AQUI, "audios")
 
 ALVO_MUSICA = -24.0                       # dB RMS no arquivo (o volume final é o GANHO_MUSICA do notebook)
-ALVO_AMBIENTE = {"taverna": -20.0, "floresta": -23.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
+ALVO_AMBIENTE = {"praia": -20.0, "taverna": -20.0, "floresta": -23.0, "caverna": -20.0, "tempestade": -20.0}   # o volume final é o GANHO_AMBIENTE do notebook
 ALVO_EFEITO = -22.0
 ALVO_EFEITO_ESPECIAL = {"barco": -26.0, "grilo": -36.0, "galo_vento": -33.0, "vez_do_jogador": -17.0, "dano": -19.0, "vento_janela": -26.0}
 AMBIENTE_FIRME = {"floresta"}                      # compressão mais forte: sem pássaros e estalos "saltando" por cima da fala

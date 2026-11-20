@@ -23,5 +23,10 @@ AMBIENTES (audios/ambiente) e EFEITOS (audios/sons) - Freesound
 - frascos.wav     sintetizado (vidros tilintando, a partir do efeito "armadura" do gerar_sons.py, sem a buzina)
 - dragao_cai.wav  "(dragão som) free sound effect" (arquivo sem autor informado)
 
+- madeira_cai.wav   DiscordantScraps - "Wood Tumble" (Freesound 767432), abafado e misturado a um chapinhar real (Lubini, Freesound 338345) para soar como o bote na água
+- rangido_barco.wav   Kostas17 - "Creaking floor" (Freesound 536365), dois rangidos, só os agudos (filtrado)
+
+- praia.mp3   suukadi - "Sea and Seagull, wave" (Freesound 410323)
+
 Sintetizados por gerar_sons.py (sem direitos de terceiros): o sino da abertura, o vento da janela e os efeitos abismo, cajado_sino, calmaria, dano, desmoronamento, esquiva, farol, fogo_apaga, garra_esquerda, garra_direita, garra_frente, goblin_foge, goblin_salta, golem_poeira, grilo, mar_calmo, passo, queimadura, teleporte, tesouro, vento_seco e vez_do_jogador.
 Originais completos (sem cortes): arquivos/audios_originais/bronze (fora do jogo, não vão para o .exe).
