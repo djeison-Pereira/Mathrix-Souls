@@ -1,55 +1,55 @@
 # Notas da equipe: Mathrix Souls
 
-Documento interno: o que foi construído, o que mudou em relação ao roteiro, como gravar as vozes e como o código funciona.
+Documento interno: o que foi construído, o que mudou em relação ao roteiro, como entregar o jogo e como o código funciona.
 
 ---
 
-## ⭐ Meta da versão final: um executável (.exe)
+## ⭐ Entrega: o jogo numa pasta zipada
 
-**A versão final do jogo tem que ser um executável Windows (`.exe`).** O notebook é onde o jogo é desenvolvido.
+**A pessoa cega precisa conseguir abrir e jogar sozinha**, sem instalar Python nem Jupyter, rodar células ou configurar nada. O notebook é onde o jogo é desenvolvido; quem joga recebe um `.zip`, extrai e dá dois cliques em `MathrixSouls.exe`.
 
-**Por quê:** a pessoa cega precisa conseguir abrir e jogar **sozinha**, sem depender de alguém para instalar Python ou Jupyter, rodar células ou configurar qualquer coisa. Com o `.exe`, basta dar dois cliques no arquivo pela acessibilidade do próprio Windows (leitor de tela, Explorador de Arquivos), e o jogo já começa falando.
+**Por que uma pasta, e não um `.exe` único:** o `.exe` único (PyInstaller `--onefile`) descompacta uns 67 MB numa pasta temporária do Windows toda vez que abre, e alguns antivírus marcam esse comportamento como suspeito (um colega precisou desativar o antivírus para jogar a v1.1). Na pasta tudo já está extraído, então não há esse comportamento. O `.zip` pesa ~36 MB, quase o mesmo que o `.exe` único.
 
-O que a versão final precisa garantir:
-- **Nada para instalar:** Python, bibliotecas e todas as gravações vão dentro do pacote. Por exemplo, com PyInstaller, gerando um `.exe` ou uma pasta com o `.exe` e os áudios.
-- **O jogo começa falando** assim que abre, sem nenhuma tela ou clique antes do menu narrado.
-- **Teclas sem Enter**, som estéreo e tempo de esquiva (ver seção 6).
-- **Funciona sem internet** e sem permissões de administrador.
-- **Testado num computador "limpo"**, sem Python instalado, e de olhos fechados, do duplo clique até o fim do jogo.
+O que a entrega garante:
+- **Nada para instalar:** Python, bibliotecas, o notebook e todos os áudios vão dentro da pasta.
+- **O jogo começa falando** assim que abre, sem tela nem clique antes do menu narrado.
+- **Teclas sem Enter**, e funciona sem internet e sem permissões de administrador.
 
-### Situação atual: dois `.exe`
-Os dois rodam o jogo (DEMO e completo) **sem instalar nada**: Python, NumPy, a voz e o pygame (que toca `.wav`, `.mp3` e `.ogg`) vão dentro deles. Cada um tem cerca de 28 MB; o de entrega cresce conforme as gravações entram. Ainda **faltam** o som estéreo, o tempo de esquiva, os efeitos sonoros e o teste num computador sem Python.
-⚠️ O `.exe` de **entrega** está **desatualizado**: ele só vai ser gerado de novo na entrega final, para não gastar tempo gerando a cada mudança. O de desenvolvimento lê o notebook a cada abertura e já tem tudo.
+**Como gerar** (antes, `pip install pyinstaller numpy comtypes pygame-ce`):
 
-| | Onde fica | Para quê | Como funciona |
-|---|---|---|---|
-| **Desenvolvimento** | `MathrixSouls.exe` (pasta principal) | A equipe testar enquanto mexe no jogo | Toda vez que abre, **lê o notebook e os áudios da pasta `arquivos`**. Mudou uma fala ou o código no notebook? Salve (Ctrl+S) e abra o `.exe` de novo. **Não precisa gerar outro.** Sem a pasta `arquivos` ao lado, ele avisa que não achou o notebook. |
-| **Entrega** | `entrega/MathrixSouls.exe` | Mandar para quem vai jogar | Leva o notebook e **todas as gravações dentro dele**. Funciona sozinho, sem nenhuma outra pasta. É uma "foto" do jogo no momento em que foi gerado: mudou algo, gere de novo. |
+> Use o **`pygame-ce`**, não o `pygame`: o `pygame` original ainda não instala no Python 3.14. O código não muda nada (continua `import pygame`).
+
+```
+python gerar_exe.py --pasta     (dentro de arquivos)
+```
+Gera `entrega/MathrixSouls/` e `entrega/MathrixSouls_pasta.zip` (a pasta `entrega/` não vai para o git). Para conferir sem jogar, abra o `.exe` com a variável de ambiente `MATHRIX_DIAG=1`: ele imprime `voz: sapi`, o mixer, a música, o ambiente, o numpy e as matrizes, e sai. Se `voz` não for `sapi`, algum módulo foi excluído por engano.
+
+Outras formas, para quem precisar: `python gerar_exe.py --entrega` (`.exe` único, em `entrega/`, foi o formato das releases v1 e v1.1) e `python gerar_exe.py` (`.exe` de desenvolvimento, que lê o notebook da pasta `arquivos` a cada abertura). Para testar sem gerar nada: `python iniciar_jogo.py`, dentro de `arquivos`.
+
+**Tamanho:** ~36 MB o `.zip` (14 MB de áudio e ~22 MB de Python, numpy e pygame); ~67 MB depois de extraído. A lista `EXCLUIR` de `gerar_exe.py` deixa de fora o que o jogo não usa (tkinter, ssl, xml, imagem e fonte do pygame...), e o notebook usa um `escape` próprio em vez do `xml`. **Se o notebook passar a importar um módulo novo, ele precisa entrar no `import` explícito de `iniciar_jogo.py`**, porque o PyInstaller não enxerga o que o notebook importa.
+
+**Antivírus:** o `.exe` não é assinado. Se um antivírus reclamar, adicionar só a pasta do jogo às exclusões resolve (o README explica), e dá para enviar o arquivo à Microsoft como falso positivo.
+
+**Releases no GitHub:** `v1` (sem música nem efeitos) e `v1.1` (com música, ambientes e efeitos). A branch `v1.2-dev` traz a correção dos efeitos cortados pela música, o histórico (Page Down/Page Up) e o que veio depois; ainda não tem release.
 
 ```
 Mathrix-Souls/
-├── MathrixSouls.exe        ← .exe de desenvolvimento: dois cliques e ele começa a falar
-├── README.md               ← página do projeto no GitHub (precisa ficar na raiz)
-├── entrega/
-│   └── MathrixSouls.exe    ← .exe de entrega: funciona sozinho
+├── README.md                  ← página do projeto no GitHub (precisa ficar na raiz)
+├── entrega/                   ← saída de gerar_exe.py (fora do git)
 └── arquivos/
-    ├── mathrix_souls.ipynb   ← o jogo inteiro (falas, cenas, motor)
-    ├── iniciar_jogo.py            ← código dos .exe: lê o notebook e roda as células
-    ├── gerar_exe.py               ← gera os .exe
-    ├── NOTAS_DA_EQUIPE.md         ← este documento
-    ├── audios/                    ← gravações (audios/<CÓDIGO>.wav)
-    │   └── sons/                  ← efeitos sonoros
-    └── Material/                  ← roteiro e documento do projeto
+    ├── mathrix_souls.ipynb       ← o jogo inteiro (falas, cenas, motor)
+    ├── iniciar_jogo.py           ← inicia o jogo: lê o notebook e roda as células
+    ├── gerar_exe.py              ← gera a entrega (.zip), ou os .exe
+    ├── gerar_historia_pdf.py     ← gera Material/Historia_do_Jogo.pdf (a história para ler)
+    ├── masterizar_audios.py      ← nivela e comprime os áudios (usa wav_para_mp3.ps1)
+    ├── gerar_sons.py             ← sons sintetizados (vento da janela e sino da abertura)
+    ├── NOTAS_DA_EQUIPE.md        ← este documento
+    ├── audios/                   ← música, ambientes e efeitos (+ CREDITOS.txt)
+    ├── audios_originais/         ← originais sem corte (só local, fora do git)
+    └── Material/                 ← Historia_do_Jogo.pdf, Jogo Inclusivo.md, roteirorascunho.pdf
 ```
 
-**Como gerar os `.exe`** (antes, `pip install pyinstaller numpy comtypes pygame-ce`):
-
-> Use o **`pygame-ce`**, não o `pygame`: o `pygame` original ainda não instala no Python 3.14. O `pygame-ce` é a versão mantida pela comunidade, e o código não muda nada (continua `import pygame`).
-- **Entrega:** no fim do notebook, no bloco **"Apêndice 2: Gerar o .exe de entrega"**, troque `GERAR_EXE_DE_ENTREGA` para `True` e rode só aquela célula. Pelo terminal, o comando é `python gerar_exe.py --entrega`, dentro de `arquivos`.
-- **Desenvolvimento:** `python gerar_exe.py`, dentro de `arquivos`. Só é preciso se o `iniciar_jogo.py` mudar ou se o notebook passar a usar uma biblioteca nova.
-- Para rodar sem `.exe` (útil para testar), use `python iniciar_jogo.py` dentro de `arquivos`.
-
-**Teste feito:** editei uma fala e a configuração de voz numa cópia do notebook **sem** gerar o `.exe` de novo, e o `.exe` de desenvolvimento já abriu com as duas mudanças. O de entrega rodou sozinho, copiado para uma pasta vazia.
+---
 
 ### Vozes do computador: Maria e Daniel
 Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em português do Brasil: a **Maria** (feminina) e o **Daniel** (masculino). Assim ele já é jogável sem nenhuma gravação. A voz, a velocidade e a voz masculina ficam na célula 1.1 (`VOZ_PREFERIDA`, `VOZ_VELOCIDADE`, `VOZ_MASCULINA`).
@@ -76,6 +76,8 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
   | Cavaleiro Fantasma | Daniel | 102 Hz | 8,3 s | Grilo |
   | Dragão | Daniel | 98 Hz | 7,5 s | Alquimista e Grilo |
   | Golem | Daniel | 97 Hz | 10,4 s (bem lento) | Grilo |
+
+  *(Valores medidos antes do último ajuste de nov/2026: hoje o Taverneiro está em tom 8 e ritmo 2, o Alquimista em -1 e -1 e o Max em -9 e -5, para os três da taverna soarem bem diferentes.)*
 
   **Se o computador não tiver o Daniel**, os personagens dele usam a Maria com um tom de reserva (de 140 a 224 Hz), como era antes. A reserva pelo PowerShell só tem a Maria.
 
@@ -113,14 +115,13 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 
 - **Música por cena** (`audios/musica/`) e **ambiente em loop** (`audios/ambiente/`), definidos no dicionário `CENA_SOM` (célula Parte 4). Para trocar a trilha de uma cena, é só mudar o nome ali. Volumes em `VOLUME_MUSICA`, `VOLUME_AMBIENTE`, `VOLUME_EFEITOS` e `GANHO_MUSICA` (célula 1.1 e 1.2); `MUSICA_ATIVA = False` desliga a música.
 - **Efeitos junto com a narração:** `som("descrição", "nome", fundo=True)` toca sem esperar. Se existir `audios/ambiente/<nome>`, ele vira loop até a cena acabar (ex.: taverna, tempestade). Sem arquivo, o jogo continua descrevendo o efeito em voz alta.
-- **Roteiro de gravação (PDF):** `python gerar_roteiro_gravacao.py` (dentro de `arquivos`, precisa de `pip install reportlab`) gera o roteiro **direto das falas do notebook**, sempre atualizado: `Material/Roteiro_de_Gravacao.pdf` (completo, com sumário, uma seção por pessoa, o Sistema e os efeitos sonoros) e um PDF por pessoa em `Material/Roteiros_por_pessoa/` (para mandar a cada um só as falas dele). Quem grava cada personagem fica em `PESSOAS`, no topo do script. Rode de novo sempre que uma fala mudar.
 - **Tamanho do .exe:** a entrega ficou em ~36 MB (era 52 MB). Músicas e ambientes viraram .mp3 de 96 kbps (a pasta `audios` caiu de 25 MB para 14 MB) e `gerar_exe.py` deixa de fora os módulos que o jogo não usa (lista `EXCLUIR`). O jogo não usa `xml` (o `escape` do SSML é próprio) nem os módulos de imagem e fonte do pygame. Para conferir um .exe novo sem jogar: `set MATHRIX_DIAG=1` e abrir o .exe: ele imprime a voz em uso (`sapi`), o áudio, a música e as matrizes e sai.
-- **Efeitos que ainda não existem de verdade:** só os sons reais (e o vento da janela) ficam em `audios/sons`; os outros foram sintetizados e estão em `sons_sinteticos/`, **fora do jogo**. Sem o arquivo, o Narrador diz a descrição (sem o "Som:"), a não ser que o efeito esteja em `SOM_REDUNDANTE` (célula 1.1): aí ele não diz nada, porque a narração da cena já conta o que acontece. Para testar um sintético, copie o `.wav` para `audios/sons`; para trocar por um real, coloque o arquivo com o mesmo nome. O PDF do roteiro de gravação marca cada um como OK ou FALTA.
+- **Efeitos:** os reais (porta, galo, trovão, masmorra, dragão caindo) e os sintetizados que a equipe aprovou ouvindo um a um ficam em `audios/sons`. Os sintetizados que sobraram estão em `sons_sinteticos/`, fora do jogo (para incluir um, copie para `audios/sons` com o mesmo nome). Sem arquivo, o Narrador diz a descrição (sem o "Som:"), a não ser que o efeito esteja em `SOM_REDUNDANTE` (célula 1.1): aí ele não diz nada, porque a narração da cena já conta o que acontece. Com arquivo, o efeito toca sozinho; só toca **junto com a descrição falada** quando o som não faz sentido sem ela (`som(..., falar=True)`: vento seco do caminho vermelho, calmaria depois da tempestade e o abismo no primeiro salto). Na esquiva (Goblin e Dragão) o som de garra, em estéreo, já diz de onde vem o golpe: o Narrador não fala o lado, o efeito toca sem esperar, a tecla de desvio vale enquanto ele toca e **não corta** o som (só se o arquivo faltar o Narrador volta a dizer o lado). O Goblin e o Dragão usam o mesmo som de garra (`garra_esquerda`, `garra_direita` e `garra_frente`, que é a mesma garra no centro, nos dois lados do fone); o `frascos` é o efeito de vidros tilintando, sem a buzina do rangido de armadura.
 - **Voltar na história:** **Page Down** volta uma fala e **refaz a história dali até o ponto onde o jogador estava**, falas e efeitos sonoros, na ordem, como se o jogo seguisse; ao chegar de volta, a fala ou pergunta daquele ponto recomeça. Durante a revisão: **Page Down** de novo volta mais uma fala, **Page Up** pula para a próxima fala (no máximo até onde estava) e qualquer outra tecla pula o que está tocando. Guarda os últimos 80 eventos (`LIMITE_HISTORICO`) e começa do zero a cada jogo novo. Falas do Sistema não entram; a música e o ambiente não são refeitos. A seta para a esquerda continua sendo só o A. Nos testes, as teclas são `<` (Page Down) e `>` (Page Up).
 - **Seleção de cenas:** o **Enter** também escolhe a cena (como o D).
 - Na cena do Goblin não há música, para o jogador ouvir de onde vem o golpe.
 - **Créditos:** `audios/CREDITOS.txt` (as licenças precisam ser conferidas e citadas no relatório). Os arquivos originais ficam em `audios_originais/`, fora da pasta `audios`, para não inflar o .exe.
-- **Masterização:** `python masterizar_audios.py` nivela, comprime e limita todos os áudios (música em -24 dB no arquivo e salva em .mp3 pelo codificador do Windows, `wav_para_mp3.ps1`; ambientes e efeitos em volumes-alvo; ver o topo do script). O volume final de cada música fica em `GANHO_MUSICA`. O `abertura` (trovão + sino) é montado à mão e o script não mexe nele. Para deixar uma música mais alta ou mais baixa, mude o `GANHO_MUSICA`, não o arquivo.
+- **Masterização:** `python masterizar_audios.py` nivela, comprime e limita todos os áudios (música em -24 dB no arquivo e salva em .mp3 pelo codificador do Windows, `wav_para_mp3.ps1`; ambientes e efeitos em volumes-alvo; ver o topo do script). O volume final de cada música fica em `GANHO_MUSICA`. **Floresta:** é a selva do paulprit (`audios/ambiente/floresta.mp3`, 220 s), que só começa quando o jogador escolhe o caminho da floresta na bifurcação; a trilha antes disso (saída da casa do Alquimista e bifurcação) toca a música `celta` (vjgalaxy), sem ambiente. Masterizada com compressão mais forte (`AMBIENTE_FIRME` em `masterizar_audios.py`: janelas curtas, razão 5:1, teto de pico 0,5) e alvo de -23 dB, para os pássaros e estalos não saltarem por cima da fala; o ganho dela no notebook é 0,04. **Grilo:** efeito mais baixo (alvo -36 dB: o cri-cri é agudo e soa mais alto do que mede). **Exceção:** a música do menu (`menu.mp3`, a MFCC) fica como o autor fez, sem masterizar, para manter a dinâmica e a emoção (`MUSICA_ORIGINAL` em `masterizar_audios.py`). O `shanty.mp3` (kaazoom) também: são só os primeiros ~20 s do original, que tocam quando o jogador embarca (cena 8): entra logo depois da frase "Você e o Grilo embarcam." (a fala foi dividida em duas), num volume já alto (`volume_da_musica(0.8)`), sobe quando a fala termina, fica uns 10 s sozinho (1 s de subida, 7 s cheio e 2 s de fade) e só então vem a próxima fala. Ganho 0,2. Os remos na água (`audios/ambiente/remos.mp3`, um loop de 11 s do Lubini) começam quando o jogador aperta W, ficam uns 2 s sozinhos e seguem em loop por baixo da narração e do shanty até a música parar (os dois saem juntos, com fade de 2 s). Como o arquivo é bem mais alto que os outros (-12 dB contra -24 dB), o ganho dela no notebook é bem menor (0,05). O `trovao` e o `abertura` são montados à mão e o script não mexe neles: o trovão é um recorte de 2,8 s do "Huge Thunder Crack" (-CASK-), comprimido e com teto de pico baixo (0,22) para o estalo não saltar na frente da fala; a abertura é 0,8 x esse trovão + um sino sintetizado (o sino puro fica em `audios_originais/sino_da_abertura.wav`, fora do git). Para deixar uma música mais alta ou mais baixa, mude o `GANHO_MUSICA`, não o arquivo.
 - `gerar_sons.py` não sobrescreve mais um efeito que já existe (use `--forcar`).
 
 ## 1. Resumo do que existe hoje
@@ -164,7 +165,7 @@ Enquanto não houver gravações, o jogo fala tudo com as vozes do Windows em po
 - **Base da história:** o `roteirorascunho.pdf` (Alquimista, dragão, Max), com a **mãe doente** do `Jogo Inclusivo.md` como motivação do herói. A mãe está na casa de cura (o hospital de Trim), e o tesouro do dragão paga as ervas.
 
 ### Revisão matemática
-Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin com as duas respostas erradas, e a geração e justificativa da triangular superior, que tem sempre exatamente uma resposta certa por relâmpago.
+Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin com as duas respostas erradas, e a geração e justificativa da triangular superior, que tem sempre exatamente uma resposta certa por trovão.
 
 **Jogo completo (conferido na saída do jogo):**
 - **Cavaleiro:** [3 1; 2 4] + nula = [3 1; 2 4]. As erradas são a nula ("tudo vira zero") e [4 2; 3 5] ("somar zero aumenta"). A explicação é que a nula é o elemento neutro da soma.
@@ -198,7 +199,7 @@ Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin co
 | **Parte 3: Cenas 1 a 9** | Cada cena tem um bloco de **falas** e um bloco de **lógica** |
 | **Parte 3B: Jogo completo** | Cenas 10 (Masmorra), 11A (Cavaleiro), 11B (Golem), 12 (Dragão) e Epílogo, no mesmo formato |
 | **Parte 4: Menu e início** | `ROTEIRO_DEMO` e `ROTEIRO_COMPLETO` (a ordem das cenas), o checkpoint e a célula **▶ Jogar** |
-| **Apêndice** | Roteiro de gravação: todas as falas e sons, marcados como OK ou FALTA |
+| **Apêndice** | Lista de falas por personagem e de efeitos; Apêndice 2: gera a entrega (.zip) |
 
 ### Como as peças se conversam
 - `FALAS` é um dicionário `código -> (personagem, texto)`. Cada cena adiciona as suas falas com `FALAS.update({...})`.
@@ -223,36 +224,13 @@ Todas as contas da DEMO foram conferidas: a soma da lição, a soma do goblin co
 
 ---
 
-## 3. Guia de gravação
+## 3. Gravações de voz
 
-1. Rode o **Apêndice** (última célula) para ver a lista de falas por personagem, com o nome de cada arquivo.
-2. Grave **uma fala por arquivo**, com o nome **exato** do código: `GB03.wav`, `S02_1.wav`, `N61_esquerda.wav`.
-3. Salve em `audios/` (na mesma pasta do notebook). Efeitos sonoros vão em `audios/sons/`.
-4. **Formato: prefira `.ogg` ou `.mp3`, em mono.** Os três formatos (`.wav`, `.mp3`, `.ogg`) funcionam nos `.exe`. No teste, a mesma fala de 4 segundos ficou com 182 KB em `.wav`, 22 KB em `.ogg` e 25 KB em `.mp3`. Com as cerca de 200 falas do jogo completo, é a diferença entre um `.exe` de entrega de uns 65 MB (`.wav`) e um de uns 34 MB (`.ogg`). No Audacity: *Arquivo → Exportar → Exportar como OGG* (ou MP3), com o canal em mono.
-   - Não deixe dois arquivos da mesma fala com formatos diferentes (ex.: `A02.wav` e `A02.mp3`); o jogo usa o primeiro que achar, na ordem `.wav`, `.mp3`, `.ogg`.
-   - Para rodar o notebook no Jupyter com `.mp3`/`.ogg`, instale o `pygame-ce`. Os `.exe` já o incluem.
-5. **Pedaços** (`NUM_0` a `NUM_9`, `MENOS`, `MAT_E`, `MAT_EM_CIMA`, `MAT_EMBAIXO`, `MAT_LINHA_1..3`, `OPCAO_A/W/D`, `J02` a `J05`): grave curto, em tom neutro e **sem silêncio no começo nem no fim**. Eles são tocados em sequência para formar frases como *"Opção A: em cima, dois e um; embaixo, zero e três."*
-6. Rode o Apêndice de novo para conferir o que já está OK.
-
-Hoje são **403 falas** (incluindo os pedaços curtos, como os números) e **49 efeitos sonoros**. Na versão 1 nada disso é gravado: tudo sai na voz do computador.
+**As vozes não serão gravadas:** o jogo fala tudo com as vozes do Windows (Maria e Daniel). O código ainda toca `audios/<CÓDIGO>.wav` (ou `.mp3`/`.ogg`) se um dia o arquivo existir, e o Apêndice do notebook lista as falas por personagem com o código de cada uma.
 
 Os códigos da história seguem `PREFIXO` + `número da cena` + `_` + `ordem` (ex.: `T02_03` = Taverneiro, cena 2, 3ª fala).
 
-| Personagem | Dublador previsto | Prefixo dos códigos |
-|---|---|---|
-| Narrador | Felipe | `N..`, `NUM_..`, `MAT_..`, `OPCAO_..`, `TIPO_..`, `J..`, `MENOS` |
-| Grilo Falante | Felipe | `G..` |
-| Goblin | Vinícius | `GB..` |
-| Max | Vinícius | `MX..` |
-| Ecos | Vinícius | `V..` |
-| Mãe | a definir | `ME..` |
-| Taverneiro | Matheus | `T..` |
-| Cavaleiro Fantasma | Matheus | `CF..` |
-| Marinheiro | João | `MR..` |
-| Dragão | João | `DR..` |
-| Alquimista | Daniel | `A..` |
-| Golem | Daniel | `GO..` |
-| Sistema | voz do computador | `S..`, `SV..`, `SC_..` |
+**Para ler a história sem jogar:** `Material/Historia_do_Jogo.pdf`, gerado por `python gerar_historia_pdf.py` (precisa de `pip install reportlab`). Ele joga o jogo sozinho, no caminho principal, e monta o PDF com as falas em ordem, os efeitos e as teclas; as falas de outros caminhos (erros e outras escolhas) vão num apêndice. Gere de novo sempre que uma fala mudar.
 
 ---
 
@@ -271,7 +249,7 @@ Os códigos da história seguem `PREFIXO` + `número da cena` + `_` + `ordem` (e
 
 ## 4. O que mudou nas falas em relação ao roteiro
 
-> **Roteiro expandido (nov/2026):** a história ganhou o Taverneiro (Bartolo), o Marinheiro (Bento), os Ecos dos magos que não voltaram, a charada da porta do farol e o determinante como golpe final. Todos os códigos foram renumerados. A tabela de/para (código novo e código antigo) e o texto de cada fala estão em [`Material/ROTEIRO_EXPANDIDO.md`](Material/ROTEIRO_EXPANDIDO.md). As seções abaixo usam os **códigos antigos** e contam o histórico de cada mudança.
+> **Roteiro expandido (nov/2026):** a história ganhou o Taverneiro (Bartolo), o Marinheiro (Bento), os Ecos dos magos que não voltaram, a charada da porta do farol e o determinante como golpe final. Todos os códigos foram renumerados. O texto de cada fala está em [`Material/Historia_do_Jogo.pdf`](Material/Historia_do_Jogo.pdf). (A tabela de/para entre código novo e antigo ficava no `ROTEIRO_EXPANDIDO.md`, removido do projeto; continua no histórico do git.) As seções abaixo usam os **códigos antigos** e contam o histórico de cada mudança.
 
 Legenda: **Nova** = não existia no roteiro · **Adaptada** = texto do roteiro com ajuste · **Igual** = texto do roteiro.
 O motivo mais comum das mudanças: o jogador **não vê a tela**, então cada momento de decisão precisa dizer **quais teclas apertar**.
@@ -325,7 +303,7 @@ O motivo mais comum das mudanças: o jogador **não vê a tela**, então cada mo
 - N80 + A23 ("De novo."): tocadas quando o jogador volta ao checkpoint da praia. A23 é **igual**. N80 foi **adaptada**: no roteiro, o herói acordava "ao lado do Alquimista", mas ele não pode sair do vilarejo (proibição do Druida, cena 2). Agora o Alquimista fala por telepatia, como no resto da praia e do barco.
 - N81, N82: **adaptadas** (N81 ganhou "Aperte W para empurrar o barco").
 - A24: **adaptada** ("te dei a Triangular **superior**", pelo mesmo motivo da A20).
-- **Novas:** N83_1/2/3 (cada relâmpago), N87 (a pergunta), N84 (acertou), N85 (onda acerta o barco), N86 (chegada à ilha, adaptada do roteiro).
+- **Novas:** N83_1/2/3 (cada trovão), N87 (a pergunta), N84 (acertou), N85 (onda acerta o barco), N86 (chegada à ilha, adaptada do roteiro).
 - **Justificativas** J01 a J06: **novas** (pedido da professora).
 
 ### Cena 9: O Farol
@@ -403,7 +381,7 @@ A neblina do roteiro saiu da história, por decisão da equipe, porque complicav
 | Esquiva para o **lado contrário** do golpe (esquerda → D, direita → A, frente → S) | É o movimento natural de fugir do golpe |
 | Goblin ataca 3 vezes antes do pedágio | O MVP pede o tutorial de esquiva pelo som |
 | Respostas erradas do goblin são **subtração** e **multiplicação posição a posição** | São erros comuns, e o Grilo explica cada um |
-| Tempestade: 3 relâmpagos (2x2, 2x2, 3x3) | Dificuldade crescente |
+| Tempestade: 3 trovões (2x2, 2x2, 3x3) | Dificuldade crescente |
 | Matrizes da tempestade sorteadas | Cada partida é diferente, e voltar ao checkpoint não vira decoreba |
 | Caminho vermelho não tira vida | O roteiro só manda o jogador de volta à bifurcação |
 | Checkpoint: goblin → recomeça o goblin; tempestade → volta à praia | Segue o roteiro ("Este é o meu checkpoint") |
@@ -467,8 +445,8 @@ Os quatro terminaram sem erro. Os três jogos completos venceram o Dragão e che
 
 ## 8. Próximos passos sugeridos
 
-1. Decidir entre o roteiro (soma/triangular) e o MVP (classificação 1 a 5). Ver o aviso da seção 1.
-2. Gravar as falas e os efeitos, acompanhando pelo Apêndice.
-3. Testar de olhos fechados e ajustar o ritmo (`VELOCIDADE`) e o texto das falas.
-4. Melhorar o `.exe` com pygame (estéreo, tecla sem Enter, tempo de esquiva) e testá-lo num computador sem Python (ver a meta no topo deste documento).
-5. Jogar o jogo completo de olhos fechados e ajustar a dificuldade: vidas, número de rodadas do Dragão e de saltos nas pedras (`RODADAS_DRAGAO`, `SALTOS`).
+1. Testar a entrega (`.zip`) num computador **sem Python** e com o antivírus ligado, e jogar de olhos fechados do duplo clique até o fim.
+2. Publicar a v1.2 (com a correção dos efeitos cortados pela música) como `.zip` na aba Releases, depois do OK da equipe.
+3. Ajustar o ritmo (`VELOCIDADE`) e a dificuldade (vidas, `RODADAS_DRAGAO`, `SALTOS`) conforme os testes com jogadores.
+4. Registrar no relatório os testes com jogadores de verdade (o que acharam mais gostoso, onde se confundiram, se acertaram as matrizes sozinhos).
+5. Conferir as licenças de cada áudio (ver `audios/CREDITOS.txt`) e citá-las no relatório.

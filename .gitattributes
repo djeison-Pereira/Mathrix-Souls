@@ -1,0 +1,6 @@
+# arquivos binários: o git não pode mexer nas quebras de linha deles (o PDF do reportlab é todo em ASCII e seria corrompido)
+*.pdf binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.exe binary

@@ -7,3 +7,6 @@ entrega/
 
 # originais de áudio sem corte (só locais; os usados ficam em arquivos/audios)
 arquivos/audios_originais/
+
+# .exe de desenvolvimento (lê o notebook da pasta arquivos): gerado localmente com python gerar_exe.py
+/MathrixSouls.exe

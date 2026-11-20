@@ -325,11 +325,11 @@ def teleporte():
 
 @efeito()
 def cajado_sino():
-    d = 3.5
+    d = 4.5
     b = Buf(d)
-    b.put(thud(85, 0.25, 0.05), 0, 1.0)
+    b.put(thud(85, 0.25, 0.05), 0, 1.0)          # primeiro o cajado bate no chão...
     b.put(nz(0.05, 500, 4000) * E(0.05, 0.01), 0, 0.6)
-    b.put(ping(110, d - 0.05, 1.4, BELL), 0.05, 0.9)
+    b.put(ping(110, d - 1.05, 1.4, BELL), 1.05, 0.9)   # ...e 1 segundo depois o sino grave
     return b.reverb(1.5, 0.35).saida()
 
 
@@ -747,6 +747,18 @@ def abertura():
     b.put(nz(d, 30, 250) * E(d, 1.1) * (0.5 + 0.5 * lfo(d, 5, 0, 1)), 0, 0.9)
     b.put(ping(98, d - 1.5, 1.6, BELL), 1.5, 1.0)
     return b.reverb(1.8, 0.4).saida()
+
+
+@efeito(0.6)
+def goblin_salta():
+    """O goblin salta para o meio da trilha: folhas farfalhando, um 'whoosh' no ar e a aterrissagem."""
+    d = 1.2
+    b = Buf(d)
+    b.put(nz(0.5, 2000, 7000) * bump(0.5, 0.28, 0.14) * lfo(0.5, 30, 0.2, 1) ** 2, 0.0, 0.5)   # folhas
+    b.put(sweep(0.4, 500, 2600), 0.12, 0.45)                                                    # o salto no ar
+    b.put(thud(120, 0.25, 0.05), 0.5, 0.9)                                                     # a aterrissagem
+    b.put(nz(0.3, 1500, 6500) * E(0.3, 0.07) * lfo(0.3, 50, 0.3, 1), 0.5, 0.6)                   # folhas espalhadas
+    return b.reverb(0.3, 0.1).saida(0.6)
 
 
 @efeito(0.45)

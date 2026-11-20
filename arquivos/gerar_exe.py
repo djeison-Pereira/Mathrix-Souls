@@ -11,6 +11,11 @@ Uso (na pasta arquivos):
                                       Leva o notebook e todas as gravações DENTRO dele: funciona sozinho,
                                       sem nenhuma outra pasta. Gere de novo sempre que mudar algo.
 
+    python gerar_exe.py --pasta    -> ESTA É A ENTREGA: entrega/MathrixSouls/ (a pasta do jogo) e entrega/MathrixSouls_pasta.zip.
+                                      Igual à entrega, mas em PASTA em vez de um arquivo só: o .exe não se
+                                      descompacta ao abrir, o que costuma assustar menos os antivírus.
+                                      Quem receber extrai o .zip e abre MathrixSouls.exe de dentro da pasta.
+
 O .exe de desenvolvimento só precisa ser gerado de novo se o iniciador_jogo.py mudar
 ou se o notebook passar a usar uma biblioteca nova.
 """
@@ -33,12 +38,13 @@ EXCLUIR = ["tkinter", "yaml", "psutil", "charset_normalizer", "pydoc_data", "uni
            "pygame.font", "pygame.freetype", "pygame.sysfont", "pygame.image", "pygame.imageext"]   # o jogo só usa o áudio do pygame
 
 
-def gerar(entrega=False):
+def gerar(entrega=False, pasta=False):
+    entrega = entrega or pasta
     destino = os.path.join(RAIZ, "entrega") if entrega else RAIZ
     with tempfile.TemporaryDirectory() as temp:
         comando = [
             sys.executable, "-m", "PyInstaller",
-            "--onefile",                      # um arquivo só
+            "--onedir" if pasta else "--onefile",     # pasta com o .exe, ou um arquivo só
             "--console",                      # janela de texto: o jogo usa teclado e voz
             "--name", "MathrixSouls",
             "--collect-submodules", "comtypes",
@@ -60,10 +66,20 @@ def gerar(entrega=False):
         comando.append(os.path.join(AQUI, "iniciar_jogo.py"))
         subprocess.run(comando, check=True)
     shutil.rmtree(os.path.join(AQUI, "__pycache__"), ignore_errors=True)
+    if pasta:
+        exe = os.path.join(destino, "MathrixSouls", "MathrixSouls.exe")
+        arquivo_zip = shutil.make_archive(os.path.join(destino, "MathrixSouls_pasta"), "zip", root_dir=destino,
+                                          base_dir="MathrixSouls")      # o zip leva a pasta "MathrixSouls" inteira
+        print(f"\nPronto (pasta): {exe}\nZip: {arquivo_zip} ({os.path.getsize(arquivo_zip) // 1024 // 1024} MB)")
+        return exe
     exe = os.path.join(destino, "MathrixSouls.exe")
     print(f"\nPronto ({'entrega' if entrega else 'desenvolvimento'}): {exe}")
     return exe
 
 
 if __name__ == "__main__":
-    gerar(entrega="--entrega" in sys.argv)
+    argumentos = sys.argv[1:]
+    desconhecidos = [a for a in argumentos if a not in ("--entrega", "--pasta")]
+    if desconhecidos:                                # não gera nada com uma opção digitada errado
+        sys.exit(f"Opção desconhecida: {' '.join(desconhecidos)}. Use --entrega, --pasta ou nada.")
+    gerar(entrega="--entrega" in argumentos, pasta="--pasta" in argumentos)

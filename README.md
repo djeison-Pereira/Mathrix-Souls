@@ -32,20 +32,20 @@ No menu, escolha:
 - **Jogo completo:** toda a aventura. **Do despertar do jovem mago até o Dragão sob o farol, com volta à taverna.**
 
 ### Como jogar
-1. Baixe o projeto (botão **Code → Download ZIP**) e extraia, ou clone:
-   ```bash
-   git clone https://github.com/djeison-Pereira/Mathrix-Souls
-   ```
-2. Dê dois cliques em **`MathrixSouls.exe`**. O jogo abre e já começa a falar.
+1. Na página do projeto, abra **Releases**, baixe o arquivo **`MathrixSouls_pasta.zip`** e **extraia** (botão direito → *Extrair tudo*).
+2. Abra a pasta extraída e dê dois cliques em **`MathrixSouls.exe`** (não abra de dentro do zip). O jogo abre e já começa a falar.
 3. Responda com **W, A, S, D** ou com as **setas**, sem precisar de Enter. Não precisa esperar a fala acabar: a tecla interrompe a voz. Não precisa instalar nada.
 4. Velocidade da fala de 0,75x a 3x: aperte **+** e **−** a qualquer momento, no menu ou durante o jogo (o **H** lembra disso).
 5. Para começar de uma cena específica, use a tecla **C** no menu (seleção de cenas).
 6. Perdeu as teclas que valem agora? Aperte **O**. Para todos os comandos, **H**.
 7. **Salvamento:** aperte **M** a qualquer momento para voltar ao menu principal; o jogo é salvo sozinho. Quando há um jogo salvo, o menu avisa isso primeiro, e a tecla **E** continua de onde você parou. Começar um jogo novo apaga o salvo. Se apertar **Q** para sair no meio do jogo, ele pergunta se você quer salvar (**W** salva, **S** sai sem salvar, **A** volta ao jogo).
 
-> Nesta versão, o jogo é narrado pelas vozes do Windows (Maria e Daniel), com um tom e um ritmo para cada personagem, e um bipe avisa quando é a sua vez.
-> O `MathrixSouls.exe` da pasta principal é o de desenvolvimento e precisa da pasta `arquivos` ao lado (o ZIP do GitHub já traz as duas coisas). Um `.exe` que funciona sozinho vai ser gerado na entrega final.
-> Para desenvolver, o jogo inteiro está no notebook [`arquivos/mathrix_souls.ipynb`](arquivos/mathrix_souls.ipynb).
+> Nesta versão, o jogo é narrado pelas vozes do Windows (Maria e Daniel), com um tom e um ritmo para cada personagem, e um bipe avisa quando é a sua vez. Há música e sons de ambiente por cena.
+> Para ler a história sem jogar, veja o PDF [`arquivos/Material/Historia_do_Jogo.pdf`](arquivos/Material/Historia_do_Jogo.pdf).
+> Para desenvolver, o jogo inteiro está no notebook [`arquivos/mathrix_souls.ipynb`](arquivos/mathrix_souls.ipynb). Para jogar a partir do código: `python iniciar_jogo.py`, dentro da pasta `arquivos`.
+
+### O antivírus reclamou?
+O jogo não está assinado digitalmente, e alguns antivírus estranham programas feitos em Python por esse motivo (é um alerta falso). Em vez de desligar o antivírus, adicione **só a pasta do jogo** às exclusões: *Segurança do Windows → Proteção contra vírus e ameaças → Gerenciar configurações → Exclusões*. O código-fonte completo está neste repositório.
 
 ## Informações
 
@@ -62,4 +62,4 @@ No menu, escolha:
 
 Jogo de RPG acessível a pessoas com deficiência visual, criado como Projeto Final da disciplina de “Álgebra Linear para Ciência de Dados”, no 2º período dos cursos de Inteligência Artificial e Ciência de Dados, pelos alunos da Faculdade Donaduzzi.
 
-Detalhes técnicos, mudanças no roteiro e guia de gravação: [arquivos/NOTAS_DA_EQUIPE.md](arquivos/NOTAS_DA_EQUIPE.md).
+Detalhes técnicos e decisões de design: [arquivos/NOTAS_DA_EQUIPE.md](arquivos/NOTAS_DA_EQUIPE.md). Créditos de música e sons: [arquivos/audios/CREDITOS.txt](arquivos/audios/CREDITOS.txt).
