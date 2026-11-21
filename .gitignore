@@ -10,3 +10,6 @@ arquivos/audios_originais/
 
 # .exe de desenvolvimento (lê o notebook da pasta arquivos): gerado localmente com python gerar_exe.py
 /MathrixSouls.exe
+
+# propostas de som para ouvir antes de levar ao jogo (geradas por arquivos/ferramentas_audio/gerar_propostas.py)
+arquivos/ferramentas_audio/revisao/
